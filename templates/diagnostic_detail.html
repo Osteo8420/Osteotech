@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OsteoTech - Détails du Diagnostic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap');
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --dark: #1a202c;
+            --light: #f7fafc;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-email {
+            color: #718096;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            display: none;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .diagnostic-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .diagnostic-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #718096;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .detail-item {
+            background: #f7fafc;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            color: #4a5568;
+        }
+
+        .back-button {
+            margin-bottom: 2rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .diagnostic-title {
+                font-size: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" style="font-size: 1.2rem;">🏠 OsteoTech</a>
+        <div class="nav-right">
+            <a href="/app">🔍 Nouveau diagnostic</a>
+            <span class="nav-email">{{ user.email }}</span>
+            <a href="/logout" style="color: var(--primary); text-decoration: none; font-weight: 600;">🚪 Déconnexion</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="back-button">
+            <a href="/dashboard" class="btn btn-primary btn-small">← Retour au dashboard</a>
+        </div>
+
+        <div class="diagnostic-header">
+            <div class="diagnostic-title">📋 {{ diagnostic.diagnosis_name }}</div>
+            <div class="confidence-badge">
+                Confiance : <strong>{{ diagnostic.diagnosis_confidence }}%</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section">
+                <h2 class="section-title">📊 Informations du Diagnostic</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">Date</div>
+                        <div class="info-value">{{ diagnostic.created_at.strftime('%d/%m/%Y') }}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Heure</div>
+                        <div class="info-value">{{ diagnostic.created_at.strftime('%H:%M') }}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Confiance</div>
+                        <div class="info-value">{{ diagnostic.diagnosis_confidence }}%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🔍 Critères Cliniques</h2>
+                
+                {% if diagnostic.siege %}
+                <div class="detail-item">
+                    <div class="detail-label">📍 Siège de la douleur</div>
+                    <div class="detail-value">{{ diagnostic.siege }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.irradiations %}
+                <div class="detail-item">
+                    <div class="detail-label">➡️ Irradiations</div>
+                    <div class="detail-value">{{ diagnostic.irradiations }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.type_douleur %}
+                <div class="detail-item">
+                    <div class="detail-label">🎯 Type de douleur</div>
+                    <div class="detail-value">{{ diagnostic.type_douleur }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.intensite %}
+                <div class="detail-item">
+                    <div class="detail-label">⚡ Intensité</div>
+                    <div class="detail-value">{{ diagnostic.intensite }}/10</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.calmee_par %}
+                <div class="detail-item">
+                    <div class="detail-label">✅ Calmée par</div>
+                    <div class="detail-value">{{ diagnostic.calmee_par }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.augmentee_par %}
+                <div class="detail-item">
+                    <div class="detail-label">❌ Augmentée par</div>
+                    <div class="detail-value">{{ diagnostic.augmentee_par }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.evolution %}
+                <div class="detail-item">
+                    <div class="detail-label">📈 Évolution</div>
+                    <div class="detail-value">{{ diagnostic.evolution }}</div>
+                </div>
+                {% endif %}
+
+                {% if diagnostic.signes_associes %}
+                <div class="detail-item">
+                    <div class="detail-label">🔗 Signes associés</div>
+                    <div class="detail-value">{{ diagnostic.signes_associes }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="actions">
+                <a href="/dashboard" class="btn btn-primary">📊 Retour au dashboard</a>
+                <a href="/app" class="btn btn-secondary">🆕 Nouveau diagnostic</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

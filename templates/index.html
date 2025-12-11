@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OsteoTech - Accueil</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Poppins:wght@500;600;700&display=swap');
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #1a202c;
+            --light: #f7fafc;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 1.5rem;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .content-section strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .highlight-text {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 1.5rem 0;
+        }
+
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            display: none;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-right: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .button-group .btn {
+            margin: 0.5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature p {
+            color: #718096;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-right {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            .button-group .btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .content-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" style="font-size: 1.2rem; margin-right: auto;">🏠 OsteoTech</a>
+        <div class="nav-right">
+            {% if user %}
+                <div class="user-info">{{ user.email }}</div>
+                <a href="/dashboard">📊 Dashboard</a>
+                <a href="/app">🔍 Diagnostic</a>
+                <a href="/logout">🚪 Déconnexion</a>
+            {% else %}
+                <a href="/login">🔑 Connexion</a>
+                <a href="/register">📝 Inscription</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>🏥 OsteoTech</h1>
+        <p class="subtitle">Outil d'aide au diagnostic des douleurs</p>
+
+        <div class="card">
+            <h2>À propos</h2>
+            
+            <div class="content-section">
+                <p>
+                    <strong>OsteoTech</strong> est un système de <span class="highlight-text">diagnostic intelligent</span> basé sur l'<strong>analyse systématique des symptômes</strong> dans les motifs de consultation pendant une séance d'ostéopathie.
+                </p>
+                
+                <div class="separator"></div>
+                
+                <p>
+                    Notre <strong>moteur diagnostique</strong> utilise des <span class="highlight-text">critères clés</span> pour identifier les <strong>pathologies les plus probables</strong> et vous guider vers le <strong>bon traitement</strong>.
+                </p>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>🎯 Basé sur la science</h3>
+                    <p>Critères validés par une étude randomisée</p>
+                </div>
+                <div class="feature">
+                    <h3>⚡ Rapide</h3>
+                    <p>Diagnostic en quelques clics</p>
+                </div>
+                <div class="feature">
+                    <h3>📚 Complète</h3>
+                    <p>Historique complet de vos diagnostics sauvegardés</p>
+                </div>
+                <div class="feature">
+                    <h3>🔒 Sécurisé</h3>
+                    <p>Vos données sont protégées et confidentielles</p>
+                </div>
+            </div>
+
+            <div class="button-group">
+                {% if user %}
+                    <a href="/app" class="btn btn-primary">🚀 Commencer un diagnostic</a>
+                    <a href="/dashboard" class="btn btn-secondary">📊 Voir mon dashboard</a>
+                {% else %}
+                    <a href="/register" class="btn btn-primary">📝 S'inscrire gratuitement</a>
+                    <a href="/login" class="btn btn-secondary">🔑 Se connecter</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

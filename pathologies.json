@@ -1,0 +1,1418 @@
+{
+  "fracture": {
+    "nom": "Fracture",
+    "zone": "Membre (Sup/Inf)",
+    "criteres": {
+      "siege": "Variable",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Immobilisation",
+      "augmentee_par": [
+        "Mobilisation",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Hématome",
+        "Déformation"
+      ]
+    },
+    "description": "Atteinte osseuse avec signes inflammatoires"
+  },
+  "tendinopathie_coiffe": {
+    "nom": "Tendinopathie de la coiffe des rotateurs",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Epaule",
+      "irradiations": "Rien",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": [
+        "Mobilisation",
+        "Mouvement",
+        "Effort",
+        "Percussion",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Articulation inflammatoire"
+      ]
+    },
+    "description": "Inflammation des tendons de l'épaule"
+  },
+  "epicondylite_mediale": {
+    "nom": "Epicondylite médiale",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Face médiale du Coude",
+      "irradiations": "Avant-bras",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Glaçage",
+        "Repos"
+      ],
+      "augmentee_par": [
+        "Flexion du Poignet",
+        "Mobilisation",
+        "Mouvement",
+        "Effort",
+        "Percussion",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Articulation inflammatoire",
+        "Rien"
+      ]
+    },
+    "description": "Epicondyle médial du coude"
+  },
+  "epicondylite_laterale": {
+    "nom": "Epicondylite latérale",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Face latérale du Coude",
+      "irradiations": "Avant-bras",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Repos",
+        "Glaçage"
+      ],
+      "augmentee_par": [
+        "Extension du poignet",
+        "Mobilisation",
+        "Mouvement",
+        "Effort",
+        "Percussion",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Articulation inflammatoire",
+        "Rien"
+      ]
+    },
+    "description": "Tendinite latérale du coude"
+  },
+  "tendinopathie_quervain": {
+    "nom": "Tendinopathie de Quervain",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Pouce",
+      "irradiations": "Face externe poignet",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Glaçage",
+      "augmentee_par": [
+        "Extension contrariée du Pouce",
+        "Mobilisation",
+        "Mouvement",
+        "Effort",
+        "Percussion",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Articulation inflammatoire",
+        "Rien"
+      ]
+    },
+    "description": "Inflammation des tendons du pouce"
+  },
+  "syndrome_canal_carpien": {
+    "nom": "Syndrome du canal carpien",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Face antérieure du Poignet",
+      "irradiations": [
+        "Pouce",
+        "Index"
+      ],
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Secouer Main",
+      "augmentee_par": [
+        "Mobilisation",
+        "Palpation",
+        "Effort",
+        "Mouvement"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Acroparesthésies nocturnes"
+    },
+    "description": "Compression du nerf médian"
+  },
+  "ncb": {
+    "nom": "N.C.B",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": [
+        "Base du crâne",
+        "Epaule"
+      ],
+      "irradiations": "Rachis cervical",
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": [
+        "Mobilisation",
+        "Palpation",
+        "Effort",
+        "Mouvement"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Paresthésies"
+    },
+    "description": "Névralgie cervico-brachiale"
+  },
+  "doigt_ressaut": {
+    "nom": "Doigt à ressaut",
+    "zone": "Membre supérieur",
+    "criteres": {
+      "siege": "Base d'un doigt",
+      "irradiations": "Rien",
+      "type_douleur": "Blocage",
+      "intensite": "0-2",
+      "calmee_par": "Repos",
+      "augmentee_par": "Variable",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Recrudescence matinale"
+    },
+    "description": "Accrochage du doigt"
+  },
+  "gastro_enterite": {
+    "nom": "Gastro-entérite",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Epigastre",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "Crampe",
+        "Brûlure"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Diarrhée",
+        "Vomissements"
+      ]
+    },
+    "description": "Infection intestinale"
+  },
+  "appendicite": {
+    "nom": "Appendicite",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "F.I.D",
+      "irradiations": [
+        "Rien",
+        "Globale"
+      ],
+      "type_douleur": "Brûlure",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Constipation"
+      ]
+    },
+    "description": "Inflammation de l'appendice"
+  },
+  "cholecystite": {
+    "nom": "Cholécystite",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Hypocondre Droit",
+      "irradiations": [
+        "Postérieure",
+        "Scapula Droite"
+      ],
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Pyrexie",
+        "Défense Abdominale"
+      ]
+    },
+    "description": "Inflammation de la vésicule biliaire"
+  },
+  "colopathie": {
+    "nom": "Colopathie fonctionnelle",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Tout l'Abdomen",
+      "irradiations": [
+        "Rien",
+        "Globale"
+      ],
+      "type_douleur": [
+        "Variable",
+        "Crampe"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Variable",
+        "Rien"
+      ],
+      "augmentee_par": "Décubitus Dorsal",
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Diarrhée",
+        "Constipation",
+        "Asthénie"
+      ]
+    },
+    "description": "Troubles fonctionnels du côlon"
+  },
+  "rectocolite": {
+    "nom": "Rectocolite hémorragique",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Tout l'Abdomen",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Variable",
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Diarrhée",
+        "Rectorragie"
+      ]
+    },
+    "description": "Inflammation chronique de l'intestin"
+  },
+  "crohn": {
+    "nom": "Maladie de Crohn",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Tout l'Abdomen",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Variable",
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Signes extradigestifs"
+    },
+    "description": "Maladie inflammatoire chronique"
+  },
+  "maladie_coeliaque": {
+    "nom": "Maladie coeliaque",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Tout l'Abdomen",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Variable",
+      "augmentee_par": "Ingestion Gluten",
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Diarrhée",
+        "Asthénie"
+      ]
+    },
+    "description": "Intolérance au gluten"
+  },
+  "pancreatite": {
+    "nom": "Pancréatite",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Epigastre",
+      "irradiations": "Scapula Droite",
+      "type_douleur": "Transfixiante",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Frissons"
+      ]
+    },
+    "description": "Inflammation du pancréas"
+  },
+  "colique_hepatique": {
+    "nom": "Colique hépatique",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Hypocondre Droit",
+      "irradiations": "Scapula Droite",
+      "type_douleur": "Variable",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Nausée",
+        "Vomissements"
+      ]
+    },
+    "description": "Douleur bilaire aiguë"
+  },
+  "peritonite": {
+    "nom": "Péritonite",
+    "zone": "Abdomen",
+    "criteres": {
+      "siege": "Tout l'Abdomen",
+      "irradiations": "Globale",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Ventre de bois"
+      ]
+    },
+    "description": "Inflammation du péritoine"
+  },
+  "tvp": {
+    "nom": "T.V.P",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Mollet",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": "Œdème"
+    },
+    "description": "Thrombose veineuse profonde"
+  },
+  "aomi": {
+    "nom": "A.O.M.I",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Membre Inférieur",
+      "irradiations": "Rien",
+      "type_douleur": "Crampe",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": "Marche",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Périmètre de marche"
+    },
+    "description": "Artériopathie oblitérante"
+  },
+  "sever": {
+    "nom": "Maladie de Sever",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Talon",
+      "irradiations": "Rien",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": [
+        "Effort",
+        "Mobilisation",
+        "Marche",
+        "Mouvement",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Articulation inflammatoire"
+      ]
+    },
+    "description": "Apophysite du calcanéum"
+  },
+  "osgood_schlatter": {
+    "nom": "Maladie d'Osgood-Schlatter",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "TTA",
+      "irradiations": "Rien",
+      "type_douleur": "Chaleur",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": [
+        "Effort",
+        "Mobilisation",
+        "Mouvement",
+        "Percussion",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Articulation inflammatoire"
+      ]
+    },
+    "description": "Apophysite tibiale"
+  },
+  "morton": {
+    "nom": "Morton",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Inter-orteil",
+      "irradiations": "Orteils",
+      "type_douleur": [
+        "Brûlure",
+        "Décharges électriques"
+      ],
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Repos",
+        "Glaçage"
+      ],
+      "augmentee_par": [
+        "Station Debout",
+        "Marche",
+        "Effort"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Paresthésies"
+    },
+    "description": "Névrome du pied"
+  },
+  "syndrome_essui_glace": {
+    "nom": "Syndrome de l'essui-glace",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Face externe du Genou",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "Brûlure",
+        "Chaleur"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Repos",
+        "Glaçage"
+      ],
+      "augmentee_par": [
+        "Effort",
+        "Marche",
+        "Mobilisation"
+      ],
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Articulation inflammatoire"
+      ]
+    },
+    "description": "Syndrome de la bandelette ilio-tibiale"
+  },
+  "goutte": {
+    "nom": "Goutte",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Hallux",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "Brûlure",
+        "Chaleur"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Rien",
+        "Anti-inflammatoires"
+      ],
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Articulation inflammatoire"
+      ]
+    },
+    "description": "Arthrite cristalline"
+  },
+  "entorse_cheville": {
+    "nom": "Entorse externe de cheville",
+    "zone": "Membre inférieur",
+    "criteres": {
+      "siege": "Face externe de la Cheville",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "Brûlure",
+        "Chaleur",
+        "Variable"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Glaçage",
+      "augmentee_par": [
+        "Effort",
+        "Mobilisation",
+        "Mouvement",
+        "Marche"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": "Articulation inflammatoire"
+    },
+    "description": "Entorse du ligament externe"
+  },
+  "meningite": {
+    "nom": "Méningite",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": "Base du crâne",
+      "irradiations": "Globale",
+      "type_douleur": "Pulsatif",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": [
+        "Bruit",
+        "Lumière"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": [
+        "Vomissements en jets",
+        "Vomissements",
+        "Pyrexie"
+      ]
+    },
+    "description": "Inflammation des méninges"
+  },
+  "migraine": {
+    "nom": "Migraine",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": "Hémicrâne",
+      "irradiations": "Globale",
+      "type_douleur": [
+        "En casque",
+        "Pulsatif"
+      ],
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Silence",
+        "Obscurité"
+      ],
+      "augmentee_par": [
+        "Effort",
+        "Bruit"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": "Nausée"
+    },
+    "description": "Céphalée vasculaire"
+  },
+  "dissection_arterielle": {
+    "nom": "Dissection artérielle carotidienne",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": [
+        "Hémicrâne",
+        "Hémiface"
+      ],
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Cécité mono-oculaire",
+        "Aphasie"
+      ]
+    },
+    "description": "Dissection de l'artère carotide"
+  },
+  "nevralgie_v": {
+    "nom": "Névralgie du V",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": "Hémiface",
+      "irradiations": "Territoire du Trijumeau",
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Palpation",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Evolution par Intermittence",
+        "Zone Trigger"
+      ]
+    },
+    "description": "Névralgie du nerf trijumeau"
+  },
+  "algie_vasculaire": {
+    "nom": "Algie vasculaire de la face",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": [
+        "Hémiface",
+        "Orbito-frontal"
+      ],
+      "irradiations": "Rien",
+      "type_douleur": "Brûlure",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": "Larmoiements"
+    },
+    "description": "Céphalée en grappe"
+  },
+  "sinusite": {
+    "nom": "Sinusite maxillaire",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": "Sous-orbitaire",
+      "irradiations": "Rien",
+      "type_douleur": "Pulsatif",
+      "intensite": [
+        "0-2",
+        "3-5"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Décubitus Dorsal",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines"
+      ],
+      "signes_associes": "Pyrexie"
+    },
+    "description": "Inflammation du sinus maxillaire"
+  },
+  "horton": {
+    "nom": "Horton",
+    "zone": "Céphalées",
+    "criteres": {
+      "siege": "Tempes",
+      "irradiations": "Cuir chevelu",
+      "type_douleur": "Pulsatif",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": [
+        "Effort",
+        "Mobilisation",
+        "Mouvement",
+        "Palpation"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours"
+      ],
+      "signes_associes": "Asthénie"
+    },
+    "description": "Artérite temporale"
+  },
+  "lumbago": {
+    "nom": "Lumbago",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "Etirement",
+        "Variable"
+      ],
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Décubitus Dorsal",
+        "Chaud"
+      ],
+      "augmentee_par": [
+        "Mouvement",
+        "Mobilisation",
+        "Effort",
+        "Marche",
+        "Palpation",
+        "Percussion"
+      ],
+      "evolution": "1 à 24h",
+      "signes_associes": "Rien"
+    },
+    "description": "Douleur lombaire aiguë"
+  },
+  "spondylodiscite": {
+    "nom": "Spondylodiscite",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "Rien",
+      "type_douleur": "Brûlure",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Frissons"
+      ]
+    },
+    "description": "Infection vertébrale"
+  },
+  "pyelonephrite": {
+    "nom": "Pyélonéphrite",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "O.G.E",
+      "type_douleur": "Variable",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Pyrexie",
+        "Frissons"
+      ]
+    },
+    "description": "Infection rénale"
+  },
+  "lombo_sciatalgie": {
+    "nom": "Lombo-sciatalgie",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "Membre Inférieur (FACE POST)",
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Repos",
+        "Décubitus Dorsal"
+      ],
+      "augmentee_par": [
+        "Effort",
+        "Station Debout",
+        "Marche"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Signes moteurs",
+        "Paresthésies"
+      ]
+    },
+    "description": "Douleur radiculaire postérieure"
+  },
+  "canal_lombaire_etroit": {
+    "nom": "Canal lombaire étroit",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "Membre Inférieur (FACE POST)",
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Antéflexion du tronc",
+        "Position Caddie"
+      ],
+      "augmentee_par": "Marche",
+      "evolution": [
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Périmètre de marche",
+        "Paresthésies",
+        "Rien"
+      ]
+    },
+    "description": "Sténose du canal lombaire"
+  },
+  "lombo_cruralgie": {
+    "nom": "Lombo-cruralgie",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": "Lombaire",
+      "irradiations": "Membre Inférieur (FACE ANT)",
+      "type_douleur": "Décharges électriques",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": [
+        "Repos",
+        "Décubitus Dorsal"
+      ],
+      "augmentee_par": [
+        "Effort",
+        "Station Debout",
+        "Marche"
+      ],
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Signes moteurs",
+        "Paresthésies"
+      ]
+    },
+    "description": "Douleur radiculaire antérieure"
+  },
+  "osteoporose": {
+    "nom": "Ostéoporose",
+    "zone": "Douleur lombaire",
+    "criteres": {
+      "siege": [
+        "Rachis thoracique",
+        "Inter-scapulaire"
+      ],
+      "irradiations": "Rien",
+      "type_douleur": "Sourde",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": "Marche",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Diminution de taille"
+      ]
+    },
+    "description": "Fragilité osseuse"
+  },
+  "angor": {
+    "nom": "Angor",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Rétrosternal",
+      "irradiations": [
+        "Bras",
+        "Cou"
+      ],
+      "type_douleur": "En étau",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Repos",
+      "augmentee_par": "Effort",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Angoisse",
+        "Rien"
+      ]
+    },
+    "description": "Douleur cardiaque angineuse"
+  },
+  "infarctus": {
+    "nom": "Infarctus du myocarde",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Rétrosternal",
+      "irradiations": [
+        "Bras",
+        "Cou"
+      ],
+      "type_douleur": "En étau",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Angoisse",
+        "Rien"
+      ]
+    },
+    "description": "Infarctus du myocarde"
+  },
+  "pericardite": {
+    "nom": "Péricardite",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Rétrosternal",
+      "irradiations": "Rien",
+      "type_douleur": [
+        "En étau",
+        "Brûlure"
+      ],
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Antéflexion du tronc",
+      "augmentee_par": "Décubitus Dorsal",
+      "evolution": [
+        "1 à 24h",
+        "2 à 6 jours",
+        "1 à 3 semaines"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Myalgies",
+        "Frissons"
+      ]
+    },
+    "description": "Inflammation du péricarde"
+  },
+  "dissection_aortique": {
+    "nom": "Dissection aortique",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": [
+        "Rétrosternal",
+        "Inter-scapulaire"
+      ],
+      "irradiations": [
+        "Postérieure",
+        "Rien"
+      ],
+      "type_douleur": [
+        "Déchirure",
+        "Transfixiante"
+      ],
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Rien",
+      "evolution": "1 à 24h",
+      "signes_associes": [
+        "Angoisse",
+        "Rien"
+      ]
+    },
+    "description": "Déchirure de l'aorte"
+  },
+  "pleuresie": {
+    "nom": "Pleurésie",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Latéro-thoracique",
+      "irradiations": "En bretelle",
+      "type_douleur": "Point de côté",
+      "intensite": [
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": [
+        "Inspiration",
+        "Toux"
+      ],
+      "evolution": [
+        "2 à 6 jours",
+        "1 à 3 semaines"
+      ],
+      "signes_associes": [
+        "Pyrexie",
+        "Dyspnée"
+      ]
+    },
+    "description": "Inflammation de la plèvre"
+  },
+  "pneumothorax": {
+    "nom": "Pneumothorax",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Latéro-thoracique",
+      "irradiations": "En bretelle",
+      "type_douleur": "Point de côté",
+      "intensite": [
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": [
+        "Inspiration",
+        "Toux"
+      ],
+      "evolution": "1 à 24h",
+      "signes_associes": "Dyspnée"
+    },
+    "description": "Effondrement pulmonaire"
+  },
+  "cancer_plevre": {
+    "nom": "Cancer de la plèvre",
+    "zone": "Douleur thoracique",
+    "criteres": {
+      "siege": "Rétrosternal",
+      "irradiations": "Rien",
+      "type_douleur": "Sourde",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Inspiration",
+      "evolution": [
+        "1 à 3 semaines",
+        "1 à 2 mois",
+        "3 mois ou plus"
+      ],
+      "signes_associes": [
+        "Rien",
+        "Dyspnée"
+      ]
+    },
+    "description": "Tumeur maligne de la plèvre"
+  },
+  "abces_retropharyngé": {
+    "nom": "Abcès rétropharyngé",
+    "zone": "Cervicalgie",
+    "criteres": {
+      "siege": "Cou",
+      "irradiations": "Rien",
+      "type_douleur": "En étau",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": "Déglutition",
+      "evolution": [
+        "2 à 6 jours",
+        "1 à 3 semaines"
+      ],
+      "signes_associes": [
+        "Frissons",
+        "Pyrexie"
+      ]
+    },
+    "description": "Infection rétropharyngée"
+  },
+  "geu": {
+    "nom": "Grossesse extra-utérine",
+    "zone": "Algies pelviennes",
+    "criteres": {
+      "siege": "Hypogastre",
+      "irradiations": "Rien",
+      "type_douleur": "Variable",
+      "intensite": [
+        "0-2",
+        "3-5",
+        "6-8",
+        "9-10"
+      ],
+      "calmee_par": "Rien",
+      "augmentee_par": [
+        "Effort",
+        "Mouvement",
+        "Mobilisation"
+      ],
+      "evolution": "2 à 6 jours",
+      "signes_associes": "Métrorragies"
+    },
+    "description": "Grossesse en dehors de l'utérus"
+  }
+}

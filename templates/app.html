@@ -3,261 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OsteoTech - Diagnostic</title>
+    <title>OsteoTech - Diagnostic S.I.T.I.C.E</title>
     <style>
-        /* ========== IMPORTS GOOGLE FONTS ========== */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Poppins:wght@500;600;700&display=swap');
-
-        /* ========== VARIABLES COULEURS ========== */
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f093fb;
-            --dark: #1a202c;
-            --light: #f7fafc;
-            --success: #48bb78;
-            --error: #f56565;
-        }
-
-        /* ========== POLICES GLOBALES ========== */
         * {
-            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
-            font-weight: 400;
-            letter-spacing: 0.3px;
-            -webkit-font-smoothing: antialiased;
             min-height: 100vh;
-            padding: 2rem 1rem;
+            padding: 20px;
         }
 
-        /* ========== NAVBAR ========== */
-        nav {
-            background: white;
-            border-radius: 12px;
-            padding: 1rem 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--secondary);
-        }
-
-        /* ========== TITRES FUTURISTES ========== */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 2rem;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        h3 {
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        /* ========== TRANSITIONS ÉPURÉES ========== */
-        button, a, input, select, textarea {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ========== INPUTS FUTURISTES ========== */
-        input, select, textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        /* ========== RANGE INPUT STYLING ========== */
-        input[type="range"] {
-            padding: 0;
-            height: 6px;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 5px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        input[type="range"]::-moz-range-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6);
-        }
-
-        /* ========== BOUTONS MODERNES ========== */
-        .btn {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* ========== CARTES MODERNES ========== */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 2rem;
-        }
-
-        /* ========== RESULT CARD ========== */
-        .result-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-top: 2rem;
-            border-left: 4px solid var(--success);
-        }
-
-        .result-pathology {
-            font-size: 2rem;
-            color: var(--dark);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        /* ========== CONTAINER ========== */
         .container {
             max-width: 900px;
             margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
 
-        /* ========== FORM GROUP ========== */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 25px;
         }
 
-        .form-label {
+        .form-group label {
             display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-            font-family: 'Poppins', sans-serif;
+            color: #333;
+            font-size: 14px;
         }
 
-        /* ========== ANIMATIONS ========== */
-        @keyframes fadeInUp {
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .intensity-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .intensity-container input {
+            flex: 1;
+        }
+
+        .intensity-value {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .diagnosis-result {
+            margin-top: 40px;
+            padding: 0;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .diagnosis-result.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -265,242 +152,326 @@
             }
         }
 
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
+        .diagnosis-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
         }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .card {
-                padding: 1.5rem;
-            }
+        .diagnosis-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .diagnosis-header p {
+            font-size: 14px;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .diagnosis-body {
+            background: #f8f9fa;
+            padding: 35px;
+            border-radius: 0 0 10px 10px;
+            border: 2px solid #667eea;
+        }
+
+        .diagnosis-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .diagnosis-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .diagnosis-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .diagnosis-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .diagnosis-description {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.7;
+            margin-top: 8px;
+            background: white;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .confidence-badge.high {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .confidence-badge.low {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .confidence-percentage {
+            display: block;
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .confidence-badge.high .confidence-percentage {
+            color: #ffffff;
+        }
+
+        .confidence-badge.low .confidence-percentage {
+            color: #ffffff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav-top a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .nav-top a:hover {
+            color: #764ba2;
         }
     </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav>
-        <a href="/" style="font-size: 1.2rem;">🏠 OsteoTech</a>
-        <div>
-            <a href="/" style="margin-right: 1.5rem;">🏠 Accueil</a>
-        </div>
-    </nav>
-
     <div class="container">
-        <!-- HEADER -->
-        <h1 class="fade-in-up">🔍 Diagnostic S.I.T.I.C.E</h1>
+        <div class="nav-top">
+            <a href="/">🏠 Accueil</a>
+            <h3>🔍 Diagnostic S.I.T.I.C.E</h3>
+            {% if user %}
+                <a href="/logout">Déconnexion</a>
+            {% endif %}
+        </div>
 
-        <!-- FORMULAIRE -->
-        <div class="card fade-in-up" style="animation-delay: 0.1s;">
-            <h2>Remplissez le formulaire</h2>
-            <p style="color: #718096; margin-bottom: 1.5rem; font-size: 0.95rem;">
-                Outil Informatique d'Aide au Diagnostic d'une Douleur
-            </p>
+        <div class="header">
+            <h1>🏥 Outil Informatique d'Aide au Diagnostic d'une Douleur</h1>
+            <p>Remplissez le formulaire ci-dessous pour obtenir un diagnostic</p>
+        </div>
 
-            <form id="diagnosticForm" method="POST" action="/app">
-                <!-- LOCALISATION ANATOMIQUE -->
-                <h3>📍 Localisation Anatomique</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="localisation_anatomique" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Céphalée">Céphalée</option>
-                        <option value="Douleur Abdominale">Douleur Abdominale</option>
-                        <option value="Douleur Cervicale">Douleur Cervicale</option>
-                        <option value="Douleur du Membre Inférieur">Douleur du Membre Inférieur</option>
-                        <option value="Douleur du Membre Supérieur">Douleur du Membre Supérieur</option>
-                        <option value="Douleur Thoracique">Douleur Thoracique</option>
-                        <option value="Facialgie">Facialgie</option>
-                        <option value="Lombalgie">Lombalgie</option>
-                    </select>
-                </div>
-
-                <!-- SIÈGE -->
-                <h3>🎯 Siège</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="siege" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Base d'un doigt">Base d'un doigt</option>
-                        <option value="Base du crâne">Base du crâne</option>
-                        <option value="Bras">Bras</option>
-                        <option value="Cou">Cou</option>
-                        <option value="Crâne Global">Crâne Global</option>
-                        <option value="Epaule">Epaule</option>
-                        <option value="Epigastre">Epigastre</option>
-                        <option value="Face antérieure du Poignet">Face antérieure du Poignet</option>
-                        <option value="Face externe de la Cheville">Face externe de la Cheville</option>
-                        <option value="Face externe du Genou">Face externe du Genou</option>
-                        <option value="Face latérale du Coude">Face latérale du Coude</option>
-                        <option value="Face médiale du Coude">Face médiale du Coude</option>
-                        <option value="Face postérieure du Crâne">Face postérieure du Crâne</option>
-                        <option value="F.I.D">F.I.D</option>
-                        <option value="Front">Front</option>
-                        <option value="Hallux">Hallux</option>
-                        <option value="Hémicrâne">Hémicrâne</option>
-                        <option value="Hémiface">Hémiface</option>
-                        <option value="Hypocondre Droit">Hypocondre Droit</option>
-                        <option value="Hypogastre">Hypogastre</option>
-                        <option value="Inter-orteil">Inter-orteil</option>
-                        <option value="Inter-scapulaire">Inter-scapulaire</option>
-                        <option value="Latéro-thoracique">Latéro-thoracique</option>
-                        <option value="Lombaire">Lombaire</option>
-                        <option value="Membre Inférieur">Membre Inférieur</option>
-                        <option value="Mollet">Mollet</option>
-                        <option value="Orbito-frontal">Orbito-frontal</option>
-                        <option value="Pouce">Pouce</option>
-                        <option value="Rachis thoracique">Rachis thoracique</option>
-                        <option value="Rétrosternal">Rétrosternal</option>
-                        <option value="Sous-orbitaire">Sous-orbitaire</option>
-                        <option value="Talon">Talon</option>
-                        <option value="Tempes">Tempes</option>
-                        <option value="Tout l'Abdomen">Tout l'Abdomen</option>
-                        <option value="TTA">TTA</option>
-                    </select>
-                </div>
-
-                <!-- IRRADIATIONS -->
-                <h3>📤 Irradiations</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="irradiations" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Rien">Rien</option>
-                        <option value="Avant-bras">Avant-bras</option>
-                        <option value="Bras">Bras</option>
-                        <option value="Cou">Cou</option>
-                        <option value="Cuir chevelu">Cuir chevelu</option>
-                        <option value="En bretelle">En bretelle</option>
-                        <option value="Face externe poignet">Face externe poignet</option>
-                        <option value="Globale">Globale</option>
-                        <option value="Membre Inférieur (FACE ANT)">Membre Inférieur (FACE ANT)</option>
-                        <option value="Membre Inférieur (FACE POST)">Membre Inférieur (FACE POST)</option>
-                        <option value="O.G.E">O.G.E</option>
-                        <option value="Oeil">Oeil</option>
-                        <option value="Orteils">Orteils</option>
-                        <option value="Postérieure">Postérieure</option>
-                        <option value="Pouce">Pouce</option>
-                        <option value="Rachis cervical">Rachis cervical</option>
-                        <option value="Scapula Droite">Scapula Droite</option>
-                        <option value="Territoire du Trijumeau">Territoire du Trijumeau</option>
-                    </select>
-                </div>
-
-                <!-- TYPE -->
-                <h3>🎯 Type</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="type" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Variable">Variable</option>
-                        <option value="Blocage">Blocage</option>
-                        <option value="Brûlure">Brûlure</option>
-                        <option value="Chaleur">Chaleur</option>
-                        <option value="Crampe">Crampe</option>
-                        <option value="Décharges électriques">Décharges électriques</option>
-                        <option value="Déchirure">Déchirure</option>
-                        <option value="En étau">En étau</option>
-                        <option value="Etirement">Etirement</option>
-                        <option value="En casque">En casque</option>
-                        <option value="Explosif">Explosif</option>
-                        <option value="Migrateur">Migrateur</option>
-                        <option value="Point de côté">Point de côté</option>
-                        <option value="Pulsatif">Pulsatif</option>
-                        <option value="Sourde">Sourde</option>
-                        <option value="Transfixiante">Transfixiante</option>
-                    </select>
-                </div>
-
-                <!-- INTENSITÉ -->
-                <h3>🔥 Intensité</h3>
-                <div class="form-group">
-                    <label class="form-label">Intensité de la douleur (0-10)</label>
-                    <input type="range" id="intensiteSlider" min="0" max="10" value="5" style="width: 100%; padding: 0; cursor: pointer;">
-                    <div style="text-align: center; margin-top: 0.5rem; font-weight: 600; color: var(--primary);">
-                        <span id="intensite-value">5</span> / 10
+        <div class="content">
+            <form method="POST" id="diagnosisForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="localisation_anatomique">📍 Localisation Anatomique</label>
+                        <select id="localisation_anatomique" name="localisation_anatomique" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Céphalée">Céphalée</option>
+                            <option value="Douleur Abdominale">Douleur Abdominale</option>
+                            <option value="Douleur Cervicale">Douleur Cervicale</option>
+                            <option value="Douleur du Membre Inférieur">Douleur du Membre Inférieur</option>
+                            <option value="Douleur du Membre Supérieur">Douleur du Membre Supérieur</option>
+                            <option value="Douleur Thoracique">Douleur Thoracique</option>
+                            <option value="Facialgie">Facialgie</option>
+                            <option value="Lombalgie">Lombalgie</option>
+                        </select>
                     </div>
-                    <!-- Champ caché pour envoyer la catégorie -->
-                    <input type="hidden" name="intensite" id="intensiteHidden" value="3-5">
+
+                    <div class="form-group">
+                        <label for="siege">🎯 Siège</label>
+                        <select id="siege" name="siege" required>
+                            <option value="">-- Choisir un siège --</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- CALMÉE PAR -->
-                <h3>✨ Calmée par</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="calmee_par" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Rien">Rien</option>
-                        <option value="Antéflexion du tronc">Antéflexion du tronc</option>
-                        <option value="Anti-inflammatoires">Anti-inflammatoires</option>
-                        <option value="Chaud">Chaud</option>
-                        <option value="Décubitus Dorsal">Décubitus Dorsal</option>
-                        <option value="Glaçage">Glaçage</option>
-                        <option value="Immobilisation">Immobilisation</option>
-                        <option value="Obscurité">Obscurité</option>
-                        <option value="P.L.S">P.L.S</option>
-                        <option value="Position Caddie">Position Caddie</option>
-                        <option value="Repos">Repos</option>
-                        <option value="Secouer Main">Secouer Main</option>
-                        <option value="Silence">Silence</option>
-                        <option value="Variable">Variable</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="irradiations">📤 Irradiations</label>
+                        <select id="irradiations" name="irradiations" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Rien">Rien</option>
+                            <option value="Avant-bras">Avant-bras</option>
+                            <option value="Bras">Bras</option>
+                            <option value="Cou">Cou</option>
+                            <option value="Cuir chevelu">Cuir chevelu</option>
+                            <option value="En bretelle">En bretelle</option>
+                            <option value="Face externe poignet">Face externe poignet</option>
+                            <option value="Globale">Globale</option>
+                            <option value="Membre Inférieur (FACE ANT)">Membre Inférieur (FACE ANT)</option>
+                            <option value="Membre Inférieur (FACE POST)">Membre Inférieur (FACE POST)</option>
+                            <option value="O.G.E">O.G.E</option>
+                            <option value="Oeil">Oeil</option>
+                            <option value="Orteils">Orteils</option>
+                            <option value="Postérieure">Postérieure</option>
+                            <option value="Pouce">Pouce</option>
+                            <option value="Rachis cervical">Rachis cervical</option>
+                            <option value="Scapula Droite">Scapula Droite</option>
+                            <option value="Territoire du Trijumeau">Territoire du Trijumeau</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">🎯 Type de Douleur</label>
+                        <select id="type" name="type" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Variable">Variable</option>
+                            <option value="Blocage">Blocage</option>
+                            <option value="Brûlure">Brûlure</option>
+                            <option value="Chaleur">Chaleur</option>
+                            <option value="Crampe">Crampe</option>
+                            <option value="Décharges électriques">Décharges électriques</option>
+                            <option value="Déchirure">Déchirure</option>
+                            <option value="En étau">En étau</option>
+                            <option value="Etirement">Etirement</option>
+                            <option value="En casque">En casque</option>
+                            <option value="Explosif">Explosif</option>
+                            <option value="Migrateur">Migrateur</option>
+                            <option value="Point de côté">Point de côté</option>
+                            <option value="Pulsatif">Pulsatif</option>
+                            <option value="Sourde">Sourde</option>
+                            <option value="Transfixiante">Transfixiante</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- AUGMENTÉE PAR -->
-                <h3>⚡ Augmentée par</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="augmentee_par" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="Rien">Rien</option>
-                        <option value="Bruit">Bruit</option>
-                        <option value="Décubitus Dorsal">Décubitus Dorsal</option>
-                        <option value="Déglutition">Déglutition</option>
-                        <option value="Effort">Effort</option>
-                        <option value="Extension contrariée du Pouce">Extension contrariée du Pouce</option>
-                        <option value="Extension du poignet">Extension du poignet</option>
-                        <option value="Flexion du Poignet">Flexion du Poignet</option>
-                        <option value="Ingestion Gluten">Ingestion Gluten</option>
-                        <option value="Inspiration">Inspiration</option>
-                        <option value="Lumière">Lumière</option>
-                        <option value="Marche">Marche</option>
-                        <option value="Mobilisation">Mobilisation</option>
-                        <option value="Mouvement">Mouvement</option>
-                        <option value="Palpation">Palpation</option>
-                        <option value="Percussion">Percussion</option>
-                        <option value="Pulsion">Pulsion</option>
-                        <option value="Station Debout">Station Debout</option>
-                        <option value="Toux">Toux</option>
-                        <option value="Variable">Variable</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="intensite">🔥 Intensité de la Douleur</label>
+                        <div class="intensity-container">
+                            <input type="range" id="intensite" name="intensite" min="0" max="10" value="5" required>
+                            <span class="intensity-value"><span id="intensiteValue">5</span> / 10</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="calmee_par">✨ Calmée par</label>
+                        <select id="calmee_par" name="calmee_par" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Rien">Rien</option>
+                            <option value="Antéflexion du tronc">Antéflexion du tronc</option>
+                            <option value="Anti-inflammatoires">Anti-inflammatoires</option>
+                            <option value="Chaud">Chaud</option>
+                            <option value="Décubitus Dorsal">Décubitus Dorsal</option>
+                            <option value="Glaçage">Glaçage</option>
+                            <option value="Immobilisation">Immobilisation</option>
+                            <option value="Obscurité">Obscurité</option>
+                            <option value="P.L.S">P.L.S</option>
+                            <option value="Position Caddie">Position Caddie</option>
+                            <option value="Repos">Repos</option>
+                            <option value="Secouer Main">Secouer Main</option>
+                            <option value="Silence">Silence</option>
+                            <option value="Variable">Variable</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- ÉVOLUTION -->
-                <h3>📈 Évolution</h3>
-                <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="evolution" required>
-                        <option value="">-- Sélectionner --</option>
-                        <option value="1 à 24h">1 à 24h</option>
-                        <option value="2 à 6 jours">2 à 6 jours</option>
-                        <option value="1 à 3 semaines">1 à 3 semaines</option>
-                        <option value="1 à 2 mois">1 à 2 mois</option>
-                        <option value="3 mois ou plus">3 mois ou plus</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="augmentee_par">⚡ Augmentée par</label>
+                        <select id="augmentee_par" name="augmentee_par" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Rien">Rien</option>
+                            <option value="Bruit">Bruit</option>
+                            <option value="Décubitus Dorsal">Décubitus Dorsal</option>
+                            <option value="Déglutition">Déglutition</option>
+                            <option value="Effort">Effort</option>
+                            <option value="Extension contrariée du Pouce">Extension contrariée du Pouce</option>
+                            <option value="Extension du poignet">Extension du poignet</option>
+                            <option value="Flexion du Poignet">Flexion du Poignet</option>
+                            <option value="Ingestion Gluten">Ingestion Gluten</option>
+                            <option value="Inspiration">Inspiration</option>
+                            <option value="Lumière">Lumière</option>
+                            <option value="Marche">Marche</option>
+                            <option value="Mobilisation">Mobilisation</option>
+                            <option value="Mouvement">Mouvement</option>
+                            <option value="Palpation">Palpation</option>
+                            <option value="Percussion">Percussion</option>
+                            <option value="Pulsion">Pulsion</option>
+                            <option value="Station Debout">Station Debout</option>
+                            <option value="Toux">Toux</option>
+                            <option value="Variable">Variable</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evolution">📈 Évolution</label>
+                        <select id="evolution" name="evolution" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="1 à 24h">1 à 24h</option>
+                            <option value="2 à 6 jours">2 à 6 jours</option>
+                            <option value="1 à 3 semaines">1 à 3 semaines</option>
+                            <option value="1 à 2 mois">1 à 2 mois</option>
+                            <option value="3 mois ou plus">3 mois ou plus</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- SIGNES ASSOCIÉS -->
-                <h3>🏥 Signes Associés</h3>
                 <div class="form-group">
-                    <label class="form-label">Choisissez une réponse</label>
-                    <select name="signes_associes" required>
+                    <label for="signes_associes">🏥 Signes Associés</label>
+                    <select id="signes_associes" name="signes_associes" required>
                         <option value="">-- Sélectionner --</option>
                         <option value="Rien">Rien</option>
                         <option value="Acroparesthésies nocturnes">Acroparesthésies nocturnes</option>
@@ -539,72 +510,84 @@
                     </select>
                 </div>
 
-                <!-- BOUTONS -->
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary">
-                        🚀 Évaluer
-                    </button>
-                    <a href="/" class="btn btn-secondary">
-                        ↩️ Retour
-                    </a>
-                </div>
+                <button type="submit" class="btn-submit">🚀 Évaluer</button>
             </form>
-        </div>
 
-        <!-- AFFICHAGE DU RÉSULTAT (nouveau) -->
-        {% if diagnosis %}
-        <div class="result-card fade-in-up">
-            <h2>✅ Résultat du diagnostic</h2>
-            <div class="result-pathology">{{ diagnosis.nom }}</div>
-            <p style="color: #718096; line-height: 1.6; margin-bottom: 1rem;">
-                <strong>Pathologie:</strong> {{ diagnosis.nom }}<br>
-                <strong>Description:</strong> {{ diagnosis.description }}<br>
-                <strong>Confiance:</strong> <span style="color: var(--primary); font-weight: 700;">{{ diagnosis.confidence }}%</span>
-            </p>
-            <a href="/app" class="btn btn-primary">
-                🔄 Nouveau diagnostic
-            </a>
-        </div>
-        {% endif %}
+            {% if diagnosis %}
+                <div class="diagnosis-result show">
+                    <div class="diagnosis-header">
+                        <h2>📋 Résultat du Diagnostic</h2>
+                        <p>Pathologie identifiée</p>
+                    </div>
 
+                    <div class="diagnosis-body">
+                        <div class="diagnosis-item">
+                            <span class="diagnosis-label">🎯 Pathologie</span>
+                            <div class="diagnosis-value">{{ diagnosis.nom }}</div>
+                        </div>
+
+                        <div class="diagnosis-item">
+                            <span class="diagnosis-label">📝 Description</span>
+                            <div class="diagnosis-description">{{ diagnosis.description }}</div>
+                        </div>
+
+                        <div class="diagnosis-item">
+                            <span class="diagnosis-label">📍 Zone Affectée</span>
+                            <div class="diagnosis-value">{{ diagnosis.zone }}</div>
+                        </div>
+
+                        <div class="diagnosis-item">
+                            <span class="diagnosis-label">💪 Certitude du Diagnostic</span>
+                            <div class="confidence-badge {% if diagnosis.confidence >= 50 %}high{% else %}low{% endif %}">
+                                <span class="confidence-percentage">{{ diagnosis.confidence }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="nav-buttons">
+                <a href="/dashboard" class="btn-secondary">📊 Dashboard</a>
+                <a href="/" class="btn-secondary">↩️ Retour</a>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Convertir slider 0-10 en catégories 0-2, 3-5, 6-8, 9-10
-        const intensiteSlider = document.getElementById('intensiteSlider');
-        const intensiteValue = document.getElementById('intensite-value');
-        const intensiteHidden = document.getElementById('intensiteHidden');
+        // Filtrage dynamique : Siège selon Localisation
+        const seatsByLocation = {{ seats_by_location | tojson | safe }};
 
-        function updateIntensite(value) {
-            intensiteValue.textContent = value;
-            
-            // Conversion slider → catégories
-            if (value <= 2) {
-                intensiteHidden.value = '0-2';
-            } else if (value <= 5) {
-                intensiteHidden.value = '3-5';
-            } else if (value <= 8) {
-                intensiteHidden.value = '6-8';
-            } else {
-                intensiteHidden.value = '9-10';
+        const localisationSelect = document.getElementById('localisation_anatomique');
+        const siegeSelect = document.getElementById('siege');
+        const intensiteInput = document.getElementById('intensite');
+        const intensiteValue = document.getElementById('intensiteValue');
+
+        function updateSiegeOptions() {
+            const loc = localisationSelect.value;
+
+            siegeSelect.innerHTML = '<option value="">-- Choisir un siège --</option>';
+
+            if (!loc || !seatsByLocation[loc]) {
+                return;
             }
+
+            seatsByLocation[loc].forEach(function (seat) {
+                const opt = document.createElement('option');
+                opt.value = seat;
+                opt.textContent = seat;
+                siegeSelect.appendChild(opt);
+            });
         }
 
-        // Événement en temps réel
-        intensiteSlider.addEventListener('input', function() {
-            updateIntensite(this.value);
+        // Mise à jour dynamique de l'intensité
+        intensiteInput.addEventListener('input', function () {
+            intensiteValue.textContent = this.value;
         });
 
-        // Initialiser au chargement
-        updateIntensite(intensiteSlider.value);
-
-        // Feedback au submit
-        const form = document.getElementById('diagnosticForm');
-        form.addEventListener('submit', function() {
-            const submitBtn = form.querySelector('button[type="submit"]');
-            submitBtn.textContent = '⏳ Évaluation en cours...';
-            submitBtn.disabled = true;
-        });
+        if (localisationSelect && siegeSelect) {
+            localisationSelect.addEventListener('change', updateSiegeOptions);
+            document.addEventListener('DOMContentLoaded', updateSiegeOptions);
+        }
     </script>
 </body>
 </html>

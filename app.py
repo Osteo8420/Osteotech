@@ -422,6 +422,16 @@ def export_school_stats_csv():
         as_attachment=True,
         download_name=f"osteotech_stats_{user.school_id}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
     )
+# Route temporaire pour promouvoir admin (à supprimer après)
+@app.route('/promote-admin/<email>')
+def promote_admin(email):
+    user = User.query.filter_by(email=email).first()
+    if user:
+        user.role = 'admin'
+        user.school_id = 'ifoga'
+        db.session.commit()
+        return f"✅ {email} est maintenant admin"
+    return "❌ Utilisateur non trouvé"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

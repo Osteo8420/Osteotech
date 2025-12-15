@@ -374,7 +374,8 @@ def dashboard_school():
         if diag.diagnosis_name:
             pathology_counts[diag.diagnosis_name] = pathology_counts.get(diag.diagnosis_name, 0) + 1
     
-    top_pathologies = sorted(pathology_counts.items(), key=lambda x: x, reverse=True)[:5]
+    top_pathologies = sorted(pathology_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+
     
     confidences = [d.diagnosis_confidence for d in school_diagnostics if d.diagnosis_confidence]
     avg_confidence = round(sum(confidences) / len(confidences), 1) if confidences else 0

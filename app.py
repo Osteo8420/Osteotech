@@ -536,19 +536,16 @@ def create_tables():
 
 def init_admin():
 
-    """Créer l'admin s'il n'existe pas"""
-
-    if not User.query.filter_by(email='admin@ifoga.fr').first():
-
-        admin = User(email='admin@ifoga.fr', role='admin', school_id='ifoga')
-
-        admin.set_password('Admin123!')
-
-        db.session.add(admin)
-
-        db.session.commit()
-
-        print("✅ Admin créé: admin@ifoga.fr / Admin123!")
+     # Créer l'admin s'il n'existe pas (une seule fois)
+    if not hasattr(create_tables, '_admin_created'):
+        with app.app_context():
+            if not User.query.filter_by(email='admin@ifoga.fr').first():
+                admin = User(email='admin@ifoga.fr', role='admin', school_id='ifoga')
+                admin.set_password('Admin123!')
+                db.session.add(admin)
+                db.session.commit()
+                print("✅ Admin créé: admin@ifoga.fr / Admin123!")
+        create_tables._admin_created = True
 
 # ============================================
 

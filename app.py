@@ -148,7 +148,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-              if user and user.check_password(password):
+            if user and user.check_password(password):
             session['user_id'] = user.id
             session['email'] = user.email
             # Si admin, aller au dashboard école

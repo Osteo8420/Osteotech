@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from models import db, User, Diagnostic
+import csv
+from io import StringIO
 
 app = Flask(__name__)
 
@@ -18,7 +20,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialiser la base de données
 db.init_app(app)
-
 
 # ============================================
 # CHARGEMENT DES PATHOLOGIES
@@ -34,7 +35,6 @@ def load_pathologies():
         print("❌ Erreur: pathologies.json non trouvé")
         return {}
 
-
 PATHOLOGIES = load_pathologies()
 
 # ============================================
@@ -42,27 +42,15 @@ PATHOLOGIES = load_pathologies()
 # ============================================
 
 SEATS_BY_LOCATION = {
-    "Céphalée": ["Base du crâne", "Crâne Global", "Front", "Hémicrâne", "Hémiface", "Face postérieure du Crâne",
-                 "Tempes", "Orbito-frontal", "Sous-orbitaire"],
-
-    "Douleur Abdominale": ["Epigastre", "F.I.D", "Hypocondre Droit", "Hypogastre", "Tout l'Abdomen",
-                           "Latéro-thoracique"],
-
+    "Céphalée": ["Base du crâne", "Crâne Global", "Front", "Hémicrâne", "Hémiface", "Face postérieure du Crâne", "Tempes", "Orbito-frontal", "Sous-orbitaire"],
+    "Douleur Abdominale": ["Epigastre", "F.I.D", "Hypocondre Droit", "Hypogastre", "Tout l'Abdomen", "Latéro-thoracique"],
     "Douleur Cervicale": ["Cou", "Inter-scapulaire", "Rachis thoracique"],
-
-    "Douleur du Membre Supérieur": ["Bras", "Epaule", "Face antérieure du Poignet", "Face latérale du Coude",
-                                    "Face médiale du Coude", "Pouce", "Base d'un doigt"],
-
-    "Douleur du Membre Inférieur": ["Membre Inférieur", "Face externe du Genou", "Face externe de la Cheville",
-                                    "Hallux", "Inter-orteil", "Mollet", "Talon", "T.T.A"],
-
+    "Douleur du Membre Supérieur": ["Bras", "Epaule", "Face antérieure du Poignet", "Face latérale du Coude", "Face médiale du Coude", "Pouce", "Base d'un doigt"],
+    "Douleur du Membre Inférieur": ["Membre Inférieur", "Face externe du Genou", "Face externe de la Cheville", "Hallux", "Inter-orteil", "Mollet", "Talon", "T.T.A"],
     "Douleur Thoracique": ["Latéro-thoracique", "Rétrosternal"],
-
     "Facialgie": ["Hémiface", "Front", "Tempes", "Sous-orbitaire"],
-
     "Lombalgie": ["Lombaire"]
 }
-
 
 # ============================================
 # DÉCORATEURS
@@ -70,22 +58,18 @@ SEATS_BY_LOCATION = {
 
 def login_required(f):
     """Décorateur pour vérifier si l'utilisateur est connecté"""
-
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
-
     return decorated_function
-
 
 def get_current_user():
     """Récupérer l'utilisateur connecté"""
     if 'user_id' in session:
         return User.query.get(session['user_id'])
     return None
-
 
 # ============================================
 # MOTEUR DE DIAGNOSTIC
@@ -95,12 +79,10 @@ def find_diagnosis(user_data):
     """Moteur diagnostique : trouver la pathologie qui match"""
     best_match = None
     best_score = 0
-
     for path_id, pathology in PATHOLOGIES.items():
         criteria = pathology.get('criteres', {})
         score = 0
         total_criteria = len(criteria)
-
         for key, expected_value in criteria.items():
             user_value = user_data.get(key)
             if isinstance(expected_value, list):
@@ -108,15 +90,11 @@ def find_diagnosis(user_data):
                     score += 1
             elif user_value == expected_value:
                 score += 1
-
         match_percentage = (score / total_criteria) * 100 if total_criteria > 0 else 0
-
         if match_percentage > best_score:
             best_score = match_percentage
             best_match = (path_id, pathology, match_percentage)
-
     return best_match if best_match and best_score > 50 else None
-
 
 # ============================================
 # ROUTES AUTHENTIFICATION
@@ -136,7 +114,6 @@ def register():
             return render_template('register.html', error='Les mots de passe ne correspondent pas')
         if len(password) < 6:
             return render_template('register.html', error='Le mot de passe doit contenir au moins 6 caractères')
-
         if User.query.filter_by(email=email).first():
             return render_template('register.html', error='Cet email est déjà utilisé')
 
@@ -147,10 +124,9 @@ def register():
 
         session['user_id'] = user.id
         session['email'] = user.email
+
         return redirect(url_for('dashboard'))
-
     return render_template('register.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -158,30 +134,25 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         password = request.form.get('password', '').strip()
-
         user = User.query.filter_by(email=email).first()
 
         if user and user.check_password(password):
             session['user_id'] = user.id
-        session['email'] = user.email
-        # Si admin, aller au dashboard école
-        if user.role == 'admin':
-            return redirect(url_for('dashboard_school'))
-        else:
-            return redirect(url_for('dashboard'))
+            session['email'] = user.email
+            # Si admin, aller au dashboard école
+            if user.role == 'admin':
+                return redirect(url_for('dashboard_school'))
+            else:
+                return redirect(url_for('dashboard'))
 
-    return render_template('login.html', error='Email ou mot de passe incorrect')
-
-
-return render_template('login.html')
-
+        return render_template('login.html', error='Email ou mot de passe incorrect')
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
     """Déconnexion"""
     session.clear()
     return redirect(url_for('index'))
-
 
 # ============================================
 # ROUTES PRINCIPALES
@@ -193,20 +164,13 @@ def index():
     user = get_current_user()
     return render_template('index.html', user=user)
 
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
     """Dashboard utilisateur avec historique"""
     user = get_current_user()
     diagnostics = Diagnostic.query.filter_by(user_id=user.id).order_by(Diagnostic.created_at.desc()).all()
-    return render_template(
-        'dashboard.html',
-        user=user,
-        diagnostics=diagnostics,
-        total_diagnostics=len(diagnostics)
-    )
-
+    return render_template('dashboard.html', user=user, diagnostics=diagnostics, total_diagnostics=len(diagnostics))
 
 @app.route('/app', methods=['GET', 'POST'])
 @login_required
@@ -229,10 +193,8 @@ def app_diagnostic():
         }
 
         result = find_diagnosis(user_data)
-
         if result:
             path_id, pathology, confidence = result
-
             diagnosis_result = {
                 'nom': pathology.get('nom'),
                 'description': pathology.get('description'),
@@ -265,13 +227,7 @@ def app_diagnostic():
                 'confidence': 0
             }
 
-    return render_template(
-        'app.html',
-        diagnosis=diagnosis_result,
-        user=user,
-        seats_by_location=SEATS_BY_LOCATION
-    )
-
+    return render_template('app.html', diagnosis=diagnosis_result, user=user, seats_by_location=SEATS_BY_LOCATION)
 
 @app.route('/diagnostic/<int:diagnostic_id>')
 @login_required
@@ -279,12 +235,9 @@ def view_diagnostic(diagnostic_id):
     """Voir un diagnostic sauvegardé"""
     user = get_current_user()
     diagnostic = Diagnostic.query.get(diagnostic_id)
-
     if not diagnostic or diagnostic.user_id != user.id:
         return redirect(url_for('dashboard'))
-
     return render_template('diagnostic_detail.html', diagnostic=diagnostic, user=user)
-
 
 # ============================================
 # ROUTES API
@@ -295,19 +248,16 @@ def api_pathologies():
     """API pour récupérer toutes les pathologies"""
     return jsonify(PATHOLOGIES)
 
-
 @app.route('/api/diagnosis', methods=['POST'])
 @login_required
 def api_diagnosis():
     """API pour obtenir un diagnostic"""
     user = get_current_user()
     data = request.json
-
     result = find_diagnosis(data)
 
     if result:
         path_id, pathology, confidence = result
-
         diagnostic = Diagnostic(
             user_id=user.id,
             diagnosis_name=pathology.get('nom'),
@@ -327,9 +277,7 @@ def api_diagnosis():
                 'id': path_id
             }
         })
-
     return jsonify({'success': False, 'message': 'Aucune pathologie trouvée'}), 404
-
 
 @app.route('/api/user/diagnostics', methods=['GET'])
 @login_required
@@ -339,7 +287,6 @@ def api_user_diagnostics():
     diagnostics = Diagnostic.query.filter_by(user_id=user.id).order_by(Diagnostic.created_at.desc()).all()
     return jsonify([d.to_dict() for d in diagnostics])
 
-
 # ============================================
 # GESTION ERREURS
 # ============================================
@@ -348,12 +295,10 @@ def api_user_diagnostics():
 def not_found(error):
     return {"error": "Page non trouvée"}, 404
 
-
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     return {"error": "Erreur serveur"}, 500
-
 
 # ============================================
 # CRÉATION BASE DE DONNÉES
@@ -364,10 +309,6 @@ def create_tables():
     """Créer les tables au démarrage"""
     db.create_all()
 
-
-# ============================================
-# LANCEMENT
-# ============================================
 # ============================================
 # ROUTES DASHBOARD ÉCOLE (Admin Only)
 # ============================================
@@ -377,7 +318,6 @@ def create_tables():
 def dashboard_school():
     """Dashboard école - Stats anonymisées (Admin Only)"""
     user = get_current_user()
-
     if user.role != 'admin':
         return redirect(url_for('dashboard'))
 
@@ -388,7 +328,6 @@ def dashboard_school():
     total_diagnostics = len(school_diagnostics)
     active_students = len(set(d.user_id for d in school_diagnostics))
 
-    from datetime import timedelta
     today = datetime.utcnow()
     month_ago = today - timedelta(days=30)
     month_diagnostics = [d for d in school_diagnostics if d.created_at >= month_ago]
@@ -415,19 +354,13 @@ def dashboard_school():
 
     return render_template('dashboard-school.html', user=user, stats=stats)
 
-
 @app.route('/api/school-stats/export-csv')
 @login_required
 def export_school_stats_csv():
     """Export stats école en CSV"""
     user = get_current_user()
-
     if user.role != 'admin':
         return {"error": "Accès refusé"}, 403
-
-    import csv
-    from io import StringIO
-    from flask import send_file
 
     school_diagnostics = Diagnostic.query.join(User).filter(
         User.school_id == user.school_id
@@ -453,7 +386,6 @@ def export_school_stats_csv():
         as_attachment=True,
         download_name=f"osteotech_stats_{user.school_id}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
     )
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -603,59 +603,42 @@ def dashboard_school():
     return render_template('dashboard-school.html', user=user, stats=stats)
 
 @app.route('/api/school-stats/export-csv')
-
 @login_required
-
 def export_school_stats_csv():
-
     """Export stats école en CSV"""
-
     user = get_current_user()
-
     if user.role != 'admin':
-
         return {"error": "Accès refusé"}, 403
 
     school_diagnostics = Diagnostic.query.join(User).filter(
-
         User.school_id == user.school_id
-
     ).all()
 
     output = StringIO()
-
     writer = csv.writer(output)
-
     writer.writerow(['Date', 'Pathologie', 'Confiance (%)', 'Siège', 'Type Douleur'])
-
     for diag in sorted(school_diagnostics, key=lambda x: x.created_at, reverse=True):
-
         writer.writerow([
-
             diag.created_at.strftime('%Y-%m-%d %H:%M'),
-
             diag.diagnosis_name or 'N/A',
-
             round(diag.diagnosis_confidence, 1) if diag.diagnosis_confidence else 'N/A',
-
             diag.siege or 'N/A',
-
             diag.type_douleur or 'N/A'
-
         ])
 
-    output.seek(0)
+    # Récupérer le contenu et créer un BytesIO
+    csv_data = output.getvalue()
+    output.close()
+    
+    from io import BytesIO
+    bytes_output = BytesIO(csv_data.encode('utf-8'))
+    bytes_output.seek(0)
 
     return send_file(
-
-        StringIO(output.getvalue()),
-
+        bytes_output,
         mimetype='text/csv',
-
         as_attachment=True,
-
         download_name=f"osteotech_stats_{user.school_id}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
-
     )
 
 if __name__ == '__main__':

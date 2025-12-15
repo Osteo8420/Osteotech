@@ -204,7 +204,7 @@ def register():
 
         user.set_password(password)
 
-        user.school_id = 'ifoga'  # ← LIGNE AJOUTÉE POUR AUTO-ASSIGNEMENT
+        user.school_id = 'ifoga'
 
         db.session.add(user)
 
@@ -528,15 +528,11 @@ def internal_error(error):
 
 def create_tables():
 
-    """Créer les tables au démarrage"""
+    """Créer les tables et l'admin au démarrage"""
 
     db.create_all()
-
-@app.before_first_request
-
-def init_admin():
-
-     # Créer l'admin s'il n'existe pas (une seule fois)
+    
+    # Créer l'admin s'il n'existe pas (une seule fois)
     if not hasattr(create_tables, '_admin_created'):
         with app.app_context():
             if not User.query.filter_by(email='admin@ifoga.fr').first():

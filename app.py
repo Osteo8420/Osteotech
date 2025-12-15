@@ -338,6 +338,90 @@ def create_tables():
 # ============================================
 # LANCEMENT
 # ============================================
+# ============================================
+# ROUTES DASHBOARD ÉCOLE (Admin Only)
+# ============================================
+
+@app.route('/dashboard-school')
+@login_required
+def dashboard_school():
+    """Dashboard école - Stats anonymisées (Admin Only)"""
+    user = get_current_user()
+    
+    if user.role != 'admin':
+        return redirect(url_for('dashboard'))
+    
+    school_diagnostics = Diagnostic.query.join(User).filter(
+        User.school_id == user.school_id
+    ).all()
+    
+    total_diagnostics = len(school_diagnostics)
+    active_students = len(set(d.user_id for d in school_diagnostics))
+    
+    from datetime import timedelta
+    today = datetime.utcnow()
+    month_ago = today - timedelta(days=30)
+    month_diagnostics = [d for d in school_diagnostics if d.created_at >= month_ago]
+    active_this_month = len(set(d.user_id for d in month_diagnostics))
+    
+    pathology_counts = {}
+    for diag in school_diagnostics:
+        if diag.diagnosis_name:
+            pathology_counts[diag.diagnosis_name] = pathology_counts.get(diag.diagnosis_name, 0) + 1
+    
+    top_pathologies = sorted(pathology_counts.items(), key=lambda x: x, reverse=True)[:5]
+    
+    confidences = [d.diagnosis_confidence for d in school_diagnostics if d.diagnosis_confidence]
+    avg_confidence = round(sum(confidences) / len(confidences), 1) if confidences else 0
+    
+    stats = {
+        'total_diagnostics': total_diagnostics,
+        'active_students': active_students,
+        'active_this_month': active_this_month,
+        'avg_confidence': avg_confidence,
+        'top_pathologies': top_pathologies,
+        'school_name': user.school_id.upper()
+    }
+    
+    return render_template('dashboard-school.html', user=user, stats=stats)
+
+@app.route('/api/school-stats/export-csv')
+@login_required
+def export_school_stats_csv():
+    """Export stats école en CSV"""
+    user = get_current_user()
+    
+    if user.role != 'admin':
+        return {"error": "Accès refusé"}, 403
+    
+    import csv
+    from io import StringIO
+    from flask import send_file
+    
+    school_diagnostics = Diagnostic.query.join(User).filter(
+        User.school_id == user.school_id
+    ).all()
+    
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['Date', 'Pathologie', 'Confiance (%)', 'Siège', 'Type Douleur'])
+    
+    for diag in sorted(school_diagnostics, key=lambda x: x.created_at, reverse=True):
+        writer.writerow([
+            diag.created_at.strftime('%Y-%m-%d %H:%M'),
+            diag.diagnosis_name or 'N/A',
+            round(diag.diagnosis_confidence, 1) if diag.diagnosis_confidence else 'N/A',
+            diag.siege or 'N/A',
+            diag.type_douleur or 'N/A'
+        ])
+    
+    output.seek(0)
+    return send_file(
+        StringIO(output.getvalue()),
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name=f"osteotech_stats_{user.school_id}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

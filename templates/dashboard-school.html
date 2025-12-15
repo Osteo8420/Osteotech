@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard École - OsteoTech</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a7b 0%, #3d7a9e 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+        }
+
+        .navbar-right a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 2rem;
+            color: #2d5a7b;
+        }
+
+        .header-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-export {
+            background: #2d5a7b;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .btn-export:hover {
+            background: #1f3d52;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #3d7a9e;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d5a7b;
+        }
+
+        .stat-subtext {
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Stat Card Variations */
+        .stat-card.accent-1 {
+            border-left-color: #3d7a9e;
+        }
+
+        .stat-card.accent-2 {
+            border-left-color: #e8a87c;
+        }
+
+        .stat-card.accent-3 {
+            border-left-color: #2d8b74;
+        }
+
+        .stat-card.accent-4 {
+            border-left-color: #c97e7e;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-card h3 {
+            color: #2d5a7b;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Table */
+        .table-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .table-card h3 {
+            color: #2d5a7b;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #2d5a7b;
+            font-size: 0.95rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .pathology-badge {
+            background: #e8f1f5;
+            color: #2d5a7b;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .count-badge {
+            background: #f0e8f5;
+            color: #6b3a8a;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .navbar-right {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* No Data */
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+        }
+
+        .no-data svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>📊 OsteoTech Dashboard</h1>
+        <div class="navbar-right">
+            <span>Bienvenue, {{ user.email }}</span>
+            <a href="/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header with Export -->
+        <div class="header">
+            <div>
+                <h2>{{ stats.school_name }}</h2>
+                <p class="header-subtitle">Tableau de bord pédagogique - Données anonymisées</p>
+            </div>
+            <button class="btn-export" onclick="exportCSV()">📥 Exporter CSV</button>
+        </div>
+
+        {% if stats.total_diagnostics > 0 %}
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card accent-1">
+                <div class="stat-label">Total de diagnostics</div>
+                <div class="stat-value">{{ stats.total_diagnostics }}</div>
+                <div class="stat-subtext">Tous les temps</div>
+            </div>
+
+            <div class="stat-card accent-2">
+                <div class="stat-label">Étudiants actifs</div>
+                <div class="stat-value">{{ stats.active_students }}</div>
+                <div class="stat-subtext">Ayant utilisé l'app</div>
+            </div>
+
+            <div class="stat-card accent-3">
+                <div class="stat-label">Ce mois</div>
+                <div class="stat-value">{{ stats.active_this_month }}</div>
+                <div class="stat-subtext">30 derniers jours</div>
+            </div>
+
+            <div class="stat-card accent-4">
+                <div class="stat-label">Précision moyenne</div>
+                <div class="stat-value">{{ stats.avg_confidence }}%</div>
+                <div class="stat-subtext">Confiance diagnostique</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>🩺 Top 5 Pathologies</h3>
+                <div class="chart-container">
+                    <canvas id="pathologyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathologies Table -->
+        <div class="table-card">
+            <h3>Pathologies les plus diagnostiquées</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathologie</th>
+                        <th>Nombre de diagnostics</th>
+                        <th>% du total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pathology, count in stats.top_pathologies %}
+                    <tr>
+                        <td><span class="pathology-badge">{{ pathology }}</span></td>
+                        <td><span class="count-badge">{{ count }}</span></td>
+                        <td>{{ "%.1f"|format((count / stats.total_diagnostics * 100)) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div class="no-data">
+            <p>Aucune donnée disponible pour l'instant.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Les diagnostics des étudiants apparaîtront ici.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Chart.js - Pathologies
+        {% if stats.top_pathologies %}
+        const ctx = document.getElementById('pathologyChart').getContext('2d');
+        const pathologyChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: [
+                    {% for pathology, count in stats.top_pathologies %}
+                    '{{ pathology }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Nombre de diagnostics',
+                    data: [
+                        {% for pathology, count in stats.top_pathologies %}
+                        {{ count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: [
+                        '#3d7a9e',
+                        '#e8a87c',
+                        '#2d8b74',
+                        '#c97e7e',
+                        '#7a6b9e'
+                    ],
+                    borderRadius: 4,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+        // Export CSV
+        function exportCSV() {
+            window.location.href = '/api/school-stats/export-csv';
+        }
+    </script>
+</body>
+</html>

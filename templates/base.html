@@ -122,19 +122,10 @@
             <nav>
                 <a href="/">Accueil</a>
                 <a href="/#features">Fonctionnalités</a>
-                {% if current_user.is_authenticated %}
-                    <a href="/dashboard">Dashboard</a>
-                {% endif %}
                 <div class="nav-right">
-                    {% if current_user.is_authenticated %}
-                        <div class="user-info">{{ current_user.email }}</div>
-                        <a href="/dashboard" class="btn btn--secondary">Dashboard</a>
-                        <a href="/app" class="btn btn--primary">Diagnostic</a>
-                        <a href="/logout">Déconnexion</a>
-                    {% else %}
-                        <a href="/login" class="btn btn--secondary">Connexion</a>
-                        <a href="/register" class="btn btn--primary">S'inscrire</a>
-                    {% endif %}
+                    <!-- ✅ SIMPLE : Toujours boutons connexion/inscription -->
+                    <a href="/login" class="btn btn--secondary">Connexion</a>
+                    <a href="/register" class="btn btn--primary">S'inscrire</a>
                 </div>
             </nav>
         </div>

@@ -130,12 +130,25 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    user = get_current_user()
-    diagnostics = Diagnostic.query.filter_by(userid=user.id).order_by(Diagnostic.createdat.desc()).all()
-    return render_template('dashboard.html', 
-                         diagnostics=diagnostics, 
-                         totaldiagnostics=len(diagnostics),
-                         email=session.get('email'))
+    """Dashboard simple - ANTI-CRASH"""
+    try:
+        user = get_current_user()
+        diagnostics = []  # Liste vide par défaut
+        totaldiagnostics = 0
+        
+        # Si user existe, essayer de charger diagnostics
+        if user:
+            diagnostics = Diagnostic.query.filter_by(userid=user.id).all()
+            totaldiagnostics = len(diagnostics)
+        
+        return render_template('dashboard.html', 
+                             diagnostics=diagnostics, 
+                             totaldiagnostics=totaldiagnostics,
+                             email=session.get('email'))
+    except Exception as e:
+        print(f"Dashboard error: {e}")
+        return render_template('dashboard.html', diagnostics=[], totaldiagnostics=0, email=session.get('email'))
+
 
 @app.route('/app', methods=['GET', 'POST'])
 @login_required

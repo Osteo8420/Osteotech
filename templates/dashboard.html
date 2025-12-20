@@ -2,77 +2,33 @@
 {% block title %}Dashboard - OsteoTech{% endblock %}
 {% block content %}
 <div style="max-width: 1000px; margin: 0 auto;">
-    <!-- Titre principal -->
     <div style="text-align: center; margin-bottom: 3rem;">
         <h1 style="font-family: 'Poppins', sans-serif; font-size: 2.5rem; color: var(--color-text); margin-bottom: 1rem;">
-            Mon Dashboard
+            Bonjour {{ email or session_email or 'Utilisateur' }} !
         </h1>
-        <p style="color: var(--color-text-secondary); font-size: 1.1rem;">Suivez vos diagnostics et statistiques</p>
+        <p style="color: var(--color-text-secondary); font-size: 1.1rem;">Dashboard OsteoTech</p>
     </div>
 
-    <!-- Stats Card (valeur par défaut si pas de données) -->
-    <div class="stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
-        <div class="stat-card" style="background: var(--color-surface); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-lg); text-align: center; border-left: 5px solid var(--color-primary); transition: all 0.3s ease;">
-            <div class="stat-number" style="font-size: 3rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.5rem;">
-                {% if totaldiagnostics is defined %}{{ totaldiagnostics }}{% else %}0{% endif %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+        <div style="background: var(--color-surface); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-lg); text-align: center; border-left: 5px solid var(--color-primary);">
+            <div style="font-size: 3rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.5rem;">
+                {{ totaldiagnostics|default(0) }}
             </div>
-            <div style="font-size: 0.95rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Diagnostics réalisés</div>
+            <div style="font-size: 0.95rem; color: var(--color-text-secondary); text-transform: uppercase;">Diagnostics</div>
         </div>
     </div>
 
-    <!-- Historique Card -->
-    <div class="card" style="background: var(--color-surface); border-radius: 12px; padding: 2.5rem; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--color-border);">
-            <div>
-                <h2 style="margin: 0; font-size: 1.8rem; color: var(--color-text); font-family: 'Poppins', sans-serif;">Historique de mes diagnostics</h2>
-                <p style="color: var(--color-text-secondary); margin: 0.5rem 0 0 0; font-size: 0.95rem;">Vos derniers diagnostics S.I.T.I.C.E.</p>
-            </div>
-            <a href="/app" class="btn btn--primary" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">
-                <span style="margin-right: 0.5rem;">➕</span> Nouveau diagnostic
-            </a>
+    <div style="background: var(--color-surface); border-radius: 12px; padding: 2.5rem; box-shadow: var(--shadow-lg);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="margin: 0; font-size: 1.8rem; color: var(--color-text);">Mes diagnostics</h2>
+            <a href="/app" class="btn btn--primary" style="padding: 0.75rem 1.5rem;">➕ Nouveau</a>
         </div>
-
-        {% if diagnostics is defined and diagnostics %}
-            {% for diagnostic in diagnostics %}
-            <div class="diagnostic-item" style="
-                background: #f8fafc; 
-                border-left: 4px solid var(--color-primary); 
-                padding: 1.75rem; 
-                margin-bottom: 1.25rem; 
-                border-radius: 12px; 
-                transition: all 0.3s ease;
-                box-shadow: var(--shadow-sm);
-            " onmouseover="this.style.boxShadow='var(--shadow-md)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'; this.style.transform='translateY(0)'">
-                <div class="diagnostic-name" style="font-size: 1.3rem; font-weight: 700; color: var(--color-text); margin-bottom: 0.75rem;">
-                    {{ diagnostic.diagnosisname }}
-                </div>
-                <div class="diagnostic-meta" style="display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: 1.25rem;">
-                    <span>{{ diagnostic.createdat.strftime('%d/%m/%Y %H:%M') }}</span>
-                    <span><strong>Siège:</strong> {{ diagnostic.siege }}</span>
-                    <span style="color: var(--color-primary); font-weight: 700;">
-                        <strong>Confiance:</strong> {{ diagnostic.diagnosisconfidence }}%
-                    </span>
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                    <a href="{{ url_for('view_diagnostic', diagnostic_id=diagnostic.id) }}" class="btn btn--primary" style="padding: 0.5rem 1.25rem; font-size: 0.85rem; flex: 1; justify-content: center;">
-                        Voir détails
-                    </a>
-                    <a href="/app" class="btn btn--secondary" style="padding: 0.5rem 1.25rem; font-size: 0.85rem; flex: 1; justify-content: center;">
-                        Refaire
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <div style="text-align: center; padding: 4rem 2rem; background: #f8fafc; border-radius: 12px; border: 2px dashed var(--color-border);">
-                <div style="font-size: 4rem; color: var(--color-text-secondary); margin-bottom: 1.5rem;">📋</div>
-                <h3 style="font-size: 1.5rem; color: var(--color-text); margin-bottom: 1rem; font-family: 'Poppins', sans-serif;">Aucun diagnostic encore</h3>
-                <p style="color: var(--color-text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
-                    Commencez par créer votre premier diagnostic avec <strong>S.I.T.I.C.E.</strong>
-                </p>
-                <a href="/app" class="btn btn--primary" style="padding: 1rem 2rem; font-size: 1rem;">Créer mon premier diagnostic</a>
-            </div>
-        {% endif %}
+        
+        <div style="text-align: center; padding: 4rem 2rem; background: #f8fafc; border-radius: 12px; border: 2px dashed var(--color-border);">
+            <div style="font-size: 4rem; color: var(--color-text-secondary); margin-bottom: 1.5rem;">📋</div>
+            <h3 style="font-size: 1.5rem; color: var(--color-text); margin-bottom: 1rem;">Commencez votre premier diagnostic</h3>
+            <a href="/app" class="btn btn--primary" style="padding: 1rem 2rem;">Lancer S.I.T.I.C.E.</a>
+        </div>
     </div>
 </div>
 {% endblock %}

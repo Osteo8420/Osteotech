@@ -115,12 +115,14 @@ def register():
         user = User(email=email)
         user.set_password(password)
         user.school_id = 'ifoga'
+        user.role = 'student'  # ✅ Default role pour new users
         
         db.session.add(user)
         db.session.commit()
         
         session['userid'] = user.id
         session['email'] = user.email
+        session['role'] = user.role
         
         return redirect(url_for('dashboard'))
     
@@ -137,7 +139,13 @@ def login():
         if user and user.check_password(password):
             session['userid'] = user.id
             session['email'] = user.email
-            return redirect(url_for('dashboard'))
+            session['role'] = user.role  # ✅ Ajoute le rôle à la session
+            
+            # ✅ REDIRECTION SELON LE RÔLE
+            if user.role == 'admin':
+                return redirect(url_for('dashboard_school'))
+            else:
+                return redirect(url_for('dashboard'))
         
         return render_template('login.html', error='Email ou mot de passe incorrect')
     
@@ -151,9 +159,14 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    """Dashboard simple - ANTI-CRASH"""
+    """Dashboard simple - Pour les étudiants"""
     try:
         user = get_current_user()
+        
+        # Vérifier que ce n'est pas un admin
+        if user and user.role == 'admin':
+            return redirect(url_for('dashboard_school'))
+        
         diagnostics = []
         totaldiagnostics = 0
         
@@ -169,6 +182,37 @@ def dashboard():
     except Exception as e:
         print(f"Dashboard error: {e}")
         return render_template('dashboard.html', diagnostics=[], totaldiagnostics=0, email=session.get('email'))
+
+@app.route('/dashboard-school')
+@login_required
+def dashboard_school():
+    """Dashboard école - Admin only"""
+    try:
+        user = get_current_user()
+        
+        # ✅ Vérifier que c'est un admin
+        if not user or user.role != 'admin':
+            return redirect(url_for('dashboard'))
+        
+        # Récupérer tous les diagnostics
+        all_diagnostics = Diagnostic.query.all()
+        totaldiagnostics = len(all_diagnostics)
+        
+        # Compter par pathologie
+        stats = {}
+        for diagnostic in all_diagnostics:
+            pathology = diagnostic.diagnosis_name or 'Non identifiée'
+            stats[pathology] = stats.get(pathology, 0) + 1
+        
+        return render_template('dashboard-school.html',
+                             diagnostics=all_diagnostics,
+                             stats={'total_diagnostics': totaldiagnostics, 'by_pathology': stats},
+                             totaldiagnostics=totaldiagnostics,
+                             email=session.get('email'),
+                             user=user)
+    except Exception as e:
+        print(f"Dashboard school error: {e}")
+        return render_template('dashboard-school.html', diagnostics=[], totaldiagnostics=0, email=session.get('email'))
 
 @app.route('/app', methods=['GET', 'POST'])
 @login_required

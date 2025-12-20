@@ -157,7 +157,7 @@ def dashboard():
         diagnostics = []
         totaldiagnostics = 0
         
-        # ✅ CORRECTION BUG #2 : user_id (pas userid)
+        # ✅ CORRECTION : user_id (pas userid)
         if user:
             diagnostics = Diagnostic.query.filter_by(user_id=user.id).all()
             totaldiagnostics = len(diagnostics)
@@ -199,7 +199,7 @@ def app_diagnostic():
                 'confidence': round(confidence, 1)
             }
             
-            # ✅ CORRECTION BUG #4 : noms de colonnes corrects
+            # ✅ CORRECTION : noms de colonnes corrects
             diagnostic = Diagnostic(
                 user_id=user.id,
                 diagnosis_name=pathology.get('nom'),

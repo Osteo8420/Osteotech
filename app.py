@@ -6,84 +6,65 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from models import db, User, Diagnostic
 import csv
-from io import StringIO
+from io import StringIO, BytesIO
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
-
-# ============================================
-# CONFIGURATION
-# ============================================
-
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
+app.config['TITLE'] = 'OsteoTech'
 
 # PostgreSQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://osteotech_db_user:ddkPXrTe3FlfstPmaadHTTcTObt4Stc8@dpg-d51vsa5actks73aagnhg-a/osteotech_db'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://osteotechdb_user:ddkPXrTe3FlfstPmaadHTTcTObt4Stc8dpg-d51vsa5actks73aagnhg-a:osteotechdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialiser la base de données
 db.init_app(app)
 
-# ============================================
-# CHARGEMENT DES PATHOLOGIES
-# ============================================
-
+# Charger les pathologies depuis le fichier JSON
 def load_pathologies():
-    """Charger les pathologies depuis le fichier JSON"""
     try:
         json_path = Path(__file__).parent / 'pathologies.json'
         with open(json_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        print("❌ Erreur: pathologies.json non trouvé")
+        print("Erreur: pathologies.json non trouvé")
         return {}
 
 PATHOLOGIES = load_pathologies()
 
-# ============================================
-# CONFIG LOCALISATION → SIÈGES
-# ============================================
-
+# Siège par localisation
 SEATS_BY_LOCATION = {
-    "Céphalée": ["Base du crâne", "Crâne Global", "Front", "Hémicrâne", "Hémiface", "Face postérieure du Crâne", "Tempes", "Orbito-frontal", "Sous-orbitaire"],
-    "Douleur Abdominale": ["Epigastre", "F.I.D", "Hypocondre Droit", "Hypogastre", "Tout l'Abdomen", "Latéro-thoracique"],
-    "Douleur Cervicale": ["Cou", "Inter-scapulaire", "Rachis thoracique"],
-    "Douleur du Membre Supérieur": ["Bras", "Epaule", "Face antérieure du Poignet", "Face latérale du Coude", "Face médiale du Coude", "Pouce", "Base d'un doigt"],
-    "Douleur du Membre Inférieur": ["Membre Inférieur", "Face externe du Genou", "Face externe de la Cheville", "Hallux", "Inter-orteil", "Mollet", "Talon", "T.T.A"],
-    "Douleur Thoracique": ["Latéro-thoracique", "Rétrosternal"],
-    "Facialgie": ["Hémiface", "Front", "Tempes", "Sous-orbitaire"],
-    "Lombalgie": ["Lombaire"]
+    'Céphale': ['Base du crâne', 'Crâne Global', 'Front', 'Hémicrâne', 'Hémiface', 'Face postérieure du Crâne', 'Tempes', 'Orbito-frontal', 'Sous-orbitaire'],
+    'Douleur Abdominale': ['Epigastre', 'F.I.D', 'Hypocondre Droit', 'Hypogastre', 'Tout l\'Abdomen', 'Latro-thoracique'],
+    'Douleur Cervicale': ['Cou', 'Inter-scapulaire', 'Rachis thoracique'],
+    'Douleur du Membre Supérieur': ['Bras', 'Epaule', 'Face antérieure du Poignet', 'Face latérale du Coude', 'Face médiale du Coude', 'Pouce', 'Base d\'un doigt'],
+    'Douleur du Membre Inférieur': ['Membre Inférieur', 'Face externe du Genou', 'Face externe de la Cheville', 'Hallux', 'Inter-orteil', 'Mollet', 'Talon', 'T.T.A'],
+    'Douleur Thoracique': ['Latro-thoracique', 'Rétrosternal'],
+    'Facialgie': ['Hémiface', 'Front', 'Tempes', 'Sous-orbitaire'],
+    'Lombalgie': ['Lombaire']
 }
 
-# ============================================
-# DÉCORATEURS
-# ============================================
-
+# Décorateur pour vérifier si l'utilisateur est connecté
 def login_required(f):
-    """Décorateur pour vérifier si l'utilisateur est connecté"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        if 'userid' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
 
+# Récupérer l'utilisateur connecté
 def get_current_user():
-    """Récupérer l'utilisateur connecté"""
-    if 'user_id' in session:
-        return User.query.get(session['user_id'])
+    """Récupérer l'utilisateur connecté via session"""
+    if 'userid' in session:
+        return User.query.get(session['userid'])
     return None
 
-# ============================================
-# MOTEUR DE DIAGNOSTIC
-# ============================================
-
+# Moteur diagnostique
 def find_diagnosis(user_data):
-    """Moteur diagnostique : trouver la pathologie qui match"""
+    """Trouver la pathologie qui match le mieux"""
     best_match = None
     best_score = 0
     
@@ -100,17 +81,20 @@ def find_diagnosis(user_data):
             elif user_value == expected_value:
                 score += 1
         
-        match_percentage = (score / total_criteria) * 100 if total_criteria > 0 else 0
+        match_percentage = (score / total_criteria * 100) if total_criteria > 0 else 0
         
         if match_percentage > best_score:
             best_score = match_percentage
             best_match = (path_id, pathology, match_percentage)
     
-    return best_match if best_match and best_score > 50 else None
+    return best_match if best_match and best_score >= 50 else None
 
-# ============================================
-# ROUTES AUTHENTIFICATION
-# ============================================
+# Routes principales
+@app.route('/', methods=['GET'])
+def index():
+    """Page d'accueil"""
+    user = get_current_user()
+    return render_template('index.html', user=user)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -134,14 +118,12 @@ def register():
         
         user = User(email=email)
         user.set_password(password)
-        user.school_id = 'ifoga'
-        
+        user.school_id = 'ifoga'  # Par défaut
         db.session.add(user)
         db.session.commit()
         
-        session['user_id'] = user.id
+        session['userid'] = user.id
         session['email'] = user.email
-        
         return redirect(url_for('dashboard'))
     
     return render_template('register.html')
@@ -154,17 +136,14 @@ def login():
         password = request.form.get('password', '').strip()
         
         user = User.query.filter_by(email=email).first()
-        
         if user and user.check_password(password):
-            session['user_id'] = user.id
+            session['userid'] = user.id
             session['email'] = user.email
-            
-            # Si admin, aller au dashboard école
+            # Redirection selon le rôle
             if user.role == 'admin':
                 return redirect(url_for('dashboard_school'))
             else:
                 return redirect(url_for('dashboard'))
-        
         return render_template('login.html', error='Email ou mot de passe incorrect')
     
     return render_template('login.html')
@@ -175,23 +154,19 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-# ============================================
-# ROUTES PRINCIPALES
-# ============================================
-
-@app.route('/')
-def index():
-    """Page d'accueil"""
-    user = get_current_user()
-    return render_template('index.html', user=user)
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
     """Dashboard utilisateur avec historique"""
     user = get_current_user()
-    diagnostics = Diagnostic.query.filter_by(user_id=user.id).order_by(Diagnostic.created_at.desc()).all()
-    return render_template('dashboard.html', user=user, diagnostics=diagnostics, total_diagnostics=len(diagnostics))
+    if not user:
+        return redirect(url_for('login'))
+    
+    diagnostics = Diagnostic.query.filter_by(userid=user.id).order_by(Diagnostic.createdat.desc()).all()
+    return render_template('dashboard.html', 
+                         user=user, 
+                         diagnostics=diagnostics, 
+                         totaldiagnostics=len(diagnostics))
 
 @app.route('/app', methods=['GET', 'POST'])
 @login_required
@@ -205,16 +180,15 @@ def app_diagnostic():
             'localisation_anatomique': request.form.get('localisation_anatomique'),
             'siege': request.form.get('siege'),
             'irradiations': request.form.get('irradiations'),
-            'type_douleur': request.form.get('type'),
+            'type': request.form.get('type'),
             'intensite': request.form.get('intensite'),
-            'calmee_par': request.form.get('calmee_par'),
-            'augmentee_par': request.form.get('augmentee_par'),
+            'calme_par': request.form.get('calme_par'),
+            'augmente_par': request.form.get('augmente_par'),
             'evolution': request.form.get('evolution'),
             'signes_associes': request.form.get('signes_associes')
         }
         
         result = find_diagnosis(user_data)
-        
         if result:
             path_id, pathology, confidence = result
             diagnosis_result = {
@@ -227,20 +201,19 @@ def app_diagnostic():
             
             # Sauvegarder le diagnostic
             diagnostic = Diagnostic(
-                user_id=user.id,
+                userid=user.id,
                 siege=user_data.get('siege'),
                 irradiations=user_data.get('irradiations'),
-                type_douleur=user_data.get('type_douleur'),
+                typedouleur=user_data.get('type'),
                 intensite=user_data.get('intensite'),
-                calmee_par=user_data.get('calmee_par'),
-                augmentee_par=user_data.get('augmentee_par'),
+                calme_par=user_data.get('calme_par'),
+                augmente_par=user_data.get('augmente_par'),
                 evolution=user_data.get('evolution'),
                 signes_associes=user_data.get('signes_associes'),
-                diagnosis_name=pathology.get('nom'),
-                diagnosis_confidence=confidence,
-                diagnosis_id=path_id
+                diagnosisname=pathology.get('nom'),
+                diagnosisconfidence=confidence,
+                diagnosisid=path_id
             )
-            
             db.session.add(diagnostic)
             db.session.commit()
         else:
@@ -250,7 +223,10 @@ def app_diagnostic():
                 'confidence': 0
             }
     
-    return render_template('app.html', diagnosis=diagnosis_result, user=user, seats_by_location=SEATS_BY_LOCATION)
+    return render_template('app.html', 
+                         diagnosis=diagnosis_result, 
+                         user=user, 
+                         seats_by_location=SEATS_BY_LOCATION)
 
 @app.route('/diagnostic/<int:diagnostic_id>')
 @login_required
@@ -258,41 +234,31 @@ def view_diagnostic(diagnostic_id):
     """Voir un diagnostic sauvegardé"""
     user = get_current_user()
     diagnostic = Diagnostic.query.get(diagnostic_id)
-    
-    if not diagnostic or diagnostic.user_id != user.id:
+    if not diagnostic or diagnostic.userid != user.id:
         return redirect(url_for('dashboard'))
-    
     return render_template('diagnostic_detail.html', diagnostic=diagnostic, user=user)
 
-# ============================================
-# ROUTES API
-# ============================================
-
+# API Routes
 @app.route('/api/pathologies', methods=['GET'])
 def api_pathologies():
-    """API pour récupérer toutes les pathologies"""
     return jsonify(PATHOLOGIES)
 
 @app.route('/api/diagnosis', methods=['POST'])
 @login_required
 def api_diagnosis():
-    """API pour obtenir un diagnostic"""
     user = get_current_user()
     data = request.json
     result = find_diagnosis(data)
-    
     if result:
         path_id, pathology, confidence = result
         diagnostic = Diagnostic(
-            user_id=user.id,
-            diagnosis_name=pathology.get('nom'),
-            diagnosis_confidence=confidence,
-            diagnosis_id=path_id
+            userid=user.id,
+            diagnosisname=pathology.get('nom'),
+            diagnosisconfidence=confidence,
+            diagnosisid=path_id
         )
-        
         db.session.add(diagnostic)
         db.session.commit()
-        
         return jsonify({
             'success': True,
             'diagnosis': {
@@ -303,84 +269,41 @@ def api_diagnosis():
                 'id': path_id
             }
         })
-    
     return jsonify({'success': False, 'message': 'Aucune pathologie trouvée'}), 404
 
-@app.route('/api/user/diagnostics', methods=['GET'])
+@app.route('/api/user-diagnostics', methods=['GET'])
 @login_required
 def api_user_diagnostics():
-    """API : historique diagnostics de l'utilisateur"""
     user = get_current_user()
-    diagnostics = Diagnostic.query.filter_by(user_id=user.id).order_by(Diagnostic.created_at.desc()).all()
+    diagnostics = Diagnostic.query.filter_by(userid=user.id).order_by(Diagnostic.createdat.desc()).all()
     return jsonify([d.to_dict() for d in diagnostics])
 
-# ============================================
-# GESTION ERREURS
-# ============================================
-
-@app.errorhandler(404)
-def not_found(error):
-    return {"error": "Page non trouvée"}, 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    db.session.rollback()
-    return {"error": "Erreur serveur"}, 500
-
-# ============================================
-# CRÉATION BASE DE DONNÉES & INITIALIZATION
-# ============================================
-
-@app.before_request
-def create_tables():
-    """Créer les tables et l'admin au démarrage"""
-    db.create_all()
-    
-    # Créer l'admin s'il n'existe pas (une seule fois)
-    if not hasattr(create_tables, '_admin_created'):
-        with app.app_context():
-            if not User.query.filter_by(email='admin@ifoga.fr').first():
-                admin = User(email='admin@ifoga.fr', role='admin', school_id='ifoga')
-                admin.set_password('Admin123!')
-                db.session.add(admin)
-                db.session.commit()
-                print("✅ Admin créé: admin@ifoga.fr / Admin123!")
-        
-        create_tables._admin_created = True
-
-# ============================================
-# ROUTES DASHBOARD ÉCOLE (Admin Only)
-# ============================================
-
+# Dashboard école (Admin)
 @app.route('/dashboard-school')
 @login_required
 def dashboard_school():
     """Dashboard école - Stats anonymisées (Admin Only)"""
     user = get_current_user()
-    
     if user.role != 'admin':
         return redirect(url_for('dashboard'))
     
-    school_diagnostics = Diagnostic.query.join(User).filter(
-        User.school_id == user.school_id
-    ).all()
-    
+    school_diagnostics = Diagnostic.query.join(User).filter(User.school_id == user.school_id).all()
     total_diagnostics = len(school_diagnostics)
-    active_students = len(set(d.user_id for d in school_diagnostics))
+    active_students = len(set(d.userid for d in school_diagnostics))
     
     today = datetime.utcnow()
     month_ago = today - timedelta(days=30)
-    month_diagnostics = [d for d in school_diagnostics if d.created_at >= month_ago]
-    active_this_month = len(set(d.user_id for d in month_diagnostics))
+    month_diagnostics = [d for d in school_diagnostics if d.createdat > month_ago]
+    active_this_month = len(set(d.userid for d in month_diagnostics))
     
     pathology_counts = {}
     for diag in school_diagnostics:
-        if diag.diagnosis_name:
-            pathology_counts[diag.diagnosis_name] = pathology_counts.get(diag.diagnosis_name, 0) + 1
+        if diag.diagnosisname:
+            pathology_counts[diag.diagnosisname] = pathology_counts.get(diag.diagnosisname, 0) + 1
     
     top_pathologies = sorted(pathology_counts.items(), key=lambda x: x[1], reverse=True)[:5]
     
-    confidences = [d.diagnosis_confidence for d in school_diagnostics if d.diagnosis_confidence]
+    confidences = [d.diagnosisconfidence for d in school_diagnostics if d.diagnosisconfidence]
     avg_confidence = round(sum(confidences) / len(confidences), 1) if confidences else 0
     
     stats = {
@@ -399,41 +322,58 @@ def dashboard_school():
 def export_school_stats_csv():
     """Export stats école en CSV"""
     user = get_current_user()
-    
     if user.role != 'admin':
-        return {"error": "Accès refusé"}, 403
+        return 'Accès refusé', 403
     
-    school_diagnostics = Diagnostic.query.join(User).filter(
-        User.school_id == user.school_id
-    ).all()
-    
+    school_diagnostics = Diagnostic.query.join(User).filter(User.school_id == user.school_id).all()
     output = StringIO()
     writer = csv.writer(output)
-    writer.writerow(['Date', 'Pathologie', 'Confiance (%)', 'Siège', 'Type Douleur'])
     
-    for diag in sorted(school_diagnostics, key=lambda x: x.created_at, reverse=True):
+    writer.writerow(['Date', 'Pathologie', 'Confiance (%)', 'Siège', 'Type Douleur'])
+    for diag in sorted(school_diagnostics, key=lambda x: x.createdat, reverse=True):
         writer.writerow([
-            diag.created_at.strftime('%Y-%m-%d %H:%M'),
-            diag.diagnosis_name or 'N/A',
-            round(diag.diagnosis_confidence, 1) if diag.diagnosis_confidence else 'N/A',
+            diag.createdat.strftime('%Y-%m-%d %H:%M'),
+            diag.diagnosisname or 'N/A',
+            round(diag.diagnosisconfidence, 1) if diag.diagnosisconfidence else 'N/A',
             diag.siege or 'N/A',
-            diag.type_douleur or 'N/A'
+            diag.typedouleur or 'N/A'
         ])
     
-    # Récupérer le contenu et créer un BytesIO
     csv_data = output.getvalue()
     output.close()
     
-    from io import BytesIO
     bytes_output = BytesIO(csv_data.encode('utf-8'))
     bytes_output.seek(0)
     
-    return send_file(
-        bytes_output,
-        mimetype='text/csv',
-        as_attachment=True,
-        download_name=f"osteotech_stats_{user.school_id}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
-    )
+    return send_file(bytes_output, mimetype='text/csv', as_attachment=True, 
+                     download_name=f'osteotech-stats-{user.school_id}-{datetime.utcnow().strftime("%Y%m%d")}.csv')
+
+# Gestion d'erreurs
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
+
+# Initialisation base de données
+@app.before_request
+def create_tables():
+    """Créer les tables et l'admin au démarrage"""
+    db.create_all()
+    
+    # Créer l'admin s'il n'existe pas (une seule fois)
+    with app.app_context():
+        if not hasattr(create_tables, 'admin_created'):
+            if not User.query.filter_by(email='admin@ifoga.fr').first():
+                admin = User(email='admin@ifoga.fr', role='admin', school_id='ifoga')
+                admin.set_password('Admin123!')
+                db.session.add(admin)
+                db.session.commit()
+                print("Admin créé: admin@ifoga.fr / Admin123!")
+            create_tables.admin_created = True
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

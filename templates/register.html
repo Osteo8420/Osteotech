@@ -1,239 +1,36 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OsteoTech - Inscription</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap');
-
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --dark: #1a202c;
-            --light: #f7fafc;
-        }
-
-        * {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
-            min-height: 100vh;
-            padding: 2rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .logo-svg {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            display: block;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #718096;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 0.95rem;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            padding: 0.875rem;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-            display: none;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-            display: block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .error {
-            color: #e53e3e;
-            background: #fff5f5;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #e53e3e;
-            font-size: 0.95rem;
-        }
-
-        .link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .link a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .link a:hover {
-            color: var(--secondary);
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                padding: 2rem 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.75rem;
-            }
-        }
-    </style>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <div class="card">
-            <div class="logo-container">
-                <svg class="logo-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Cercle principal -->
-                    <circle cx="40" cy="40" r="38" fill="none" stroke="#667eea" stroke-width="2"/>
-                    
-                    <!-- Colonne vertébrale stylisée -->
-                    <!-- Haut -->
-                    <circle cx="40" cy="18" r="4" fill="#667eea"/>
-                    <!-- Milieu haut -->
-                    <circle cx="40" cy="28" r="5" fill="#667eea"/>
-                    <!-- Milieu -->
-                    <circle cx="40" cy="40" r="6" fill="#667eea"/>
-                    <!-- Milieu bas -->
-                    <circle cx="40" cy="52" r="5" fill="#667eea"/>
-                    <!-- Bas -->
-                    <circle cx="40" cy="62" r="4" fill="#667eea"/>
-                    
-                    <!-- Lignes de connexion -->
-                    <line x1="40" y1="18" x2="40" y2="62" stroke="#764ba2" stroke-width="1.5" opacity="0.5"/>
-                </svg>
-                <h1>OsteoTech</h1>
-                <p class="subtitle">Inscription</p>
-            </div>
-
-            {% if error %}
-            <div class="error">{{ error }}</div>
-            {% endif %}
-
-            <form method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password_confirm">Confirmer le mot de passe</label>
-                    <input type="password" id="password_confirm" name="password_confirm" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Créer mon compte</button>
-            </form>
-
-            <div class="link">
-                Vous avez déjà un compte ? <a href="/login">Se connecter</a>
-            </div>
-        </div>
+{% extends "base.html" %}
+{% block title %}Inscription - OsteoTech{% endblock %}
+{% block content %}
+<div style="max-width: 400px; margin: 0 auto; background: var(--color-surface); border-radius: 12px; padding: 2.5rem; box-shadow: var(--shadow-lg);">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: var(--color-primary); margin-bottom: 0.5rem;">OsteoTech</h1>
+        <p style="color: var(--color-text-secondary);">Inscription</p>
     </div>
-</body>
-</html>
+
+    {% if error %}
+        <div style="color: #c01530; background: #fef2f2; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #c01530; font-size: 0.95rem;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text);">Email</label>
+            <input type="email" name="email" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text);">Mot de passe</label>
+            <input type="password" name="password" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text);">Confirmer le mot de passe</label>
+            <input type="password" name="password_confirm" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;">
+        </div>
+        <button type="submit" class="btn btn--primary" style="width: 100%; padding: 0.875rem;">Créer mon compte</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+        Déjà un compte ? <a href="/login" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">Se connecter</a>
+    </div>
+</div>
+{% endblock %}

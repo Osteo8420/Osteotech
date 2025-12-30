@@ -1,32 +1,264 @@
 {% extends "base.html" %}
+
 {% block title %}Connexion - OsteoTech{% endblock %}
+
 {% block content %}
-<div style="max-width: 400px; margin: 0 auto; background: var(--color-surface); border-radius: 12px; padding: 2.5rem; box-shadow: var(--shadow-lg);">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: var(--color-primary); margin-bottom: 0.5rem;">Connexion</h1>
-        <p style="color: var(--color-text-secondary);">Accédez à votre tableau de bord</p>
+<style>
+    .login-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 400px 1fr;
+        gap: 40px;
+        align-items: center;
+        min-height: calc(100vh - 80px);
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .login-illustration {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.25;
+    }
+
+    .login-illustration svg {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+    }
+
+    .login-form-container {
+        background: var(--color-surface);
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .login-form-container h1 {
+        font-family: Poppins, sans-serif;
+        font-size: 2rem;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    .login-form-container p {
+        color: var(--color-text-secondary);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .error-message {
+        color: #c01530;
+        background: #fef2f2;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #c01530;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--color-text);
+        font-size: 0.95rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: var(--color-primary);
+        outline: 2px solid var(--color-primary);
+        outline-offset: 0;
+    }
+
+    .login-form-container button {
+        width: 100%;
+        padding: 0.875rem;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: Poppins, sans-serif;
+    }
+
+    .login-form-container button:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+    }
+
+    .login-signup-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .login-signup-link a {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-signup-link a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+        .login-wrapper {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .login-illustration {
+            display: none;
+        }
+
+        .login-form-container {
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .login-wrapper {
+            padding: 20px 20px;
+        }
+
+        .login-form-container {
+            padding: 2rem;
+        }
+
+        .login-form-container h1 {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+
+<div class="login-wrapper">
+    <!-- Illustration Gauche: Main Ostéopathe -->
+    <div class="login-illustration">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hand/Osteo illustration -->
+            <defs>
+                <style>
+                    .osteo-stroke { stroke: var(--color-primary); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    .osteo-fill { fill: var(--color-primary); }
+                </style>
+            </defs>
+            
+            <!-- Palm -->
+            <ellipse cx="100" cy="120" rx="35" ry="45" class="osteo-stroke"/>
+            
+            <!-- Thumb -->
+            <path d="M 70 110 Q 50 100 45 80" class="osteo-stroke"/>
+            
+            <!-- Index -->
+            <path d="M 85 75 Q 80 40 85 20" class="osteo-stroke"/>
+            
+            <!-- Middle -->
+            <path d="M 100 70 Q 100 35 100 15" class="osteo-stroke"/>
+            
+            <!-- Ring -->
+            <path d="M 115 75 Q 120 40 115 20" class="osteo-stroke"/>
+            
+            <!-- Pinky -->
+            <path d="M 130 110 Q 150 100 155 80" class="osteo-stroke"/>
+            
+            <!-- Wrist -->
+            <path d="M 75 160 L 125 160 Q 130 170 125 180 L 75 180 Q 70 170 75 160" class="osteo-stroke"/>
+            
+            <!-- Healing glow circles -->
+            <circle cx="100" cy="100" r="60" class="osteo-stroke" opacity="0.3"/>
+            <circle cx="100" cy="100" r="75" class="osteo-stroke" opacity="0.15"/>
+        </svg>
     </div>
 
-    {% if error %}
-        <div style="color: #c01530; background: #fef2f2; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #c01530; font-size: 0.95rem;">
-            {{ error }}
-        </div>
-    {% endif %}
+    <!-- Formulaire Connexion -->
+    <div class="login-form-container">
+        <h1>Connexion</h1>
+        <p>Accédez à votre tableau de bord</p>
 
-    <form method="POST">
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text);">Email</label>
-            <input type="email" name="email" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;">
-        </div>
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text);">Mot de passe</label>
-            <input type="password" name="password" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;">
-        </div>
-        <button type="submit" class="btn btn--primary" style="width: 100%; padding: 0.875rem;">Se connecter</button>
-    </form>
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
 
-    <div style="text-align: center; margin-top: 1.5rem;">
-        Pas de compte ? <a href="/register" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">S'inscrire</a>
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div class="login-signup-link">
+            Pas de compte ? <a href="/register">S'inscrire</a>
+        </div>
+    </div>
+
+    <!-- Illustration Droite: Dashboard -->
+    <div class="login-illustration">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dashboard/Tablet illustration -->
+            <defs>
+                <style>
+                    .dashboard-stroke { stroke: var(--color-primary); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    .dashboard-fill { fill: var(--color-primary); }
+                </style>
+            </defs>
+            
+            <!-- Tablet frame -->
+            <rect x="40" y="30" width="120" height="150" rx="8" class="dashboard-stroke"/>
+            
+            <!-- Screen -->
+            <rect x="45" y="35" width="110" height="140" rx="6" fill="var(--color-bg)" opacity="0.5"/>
+            
+            <!-- Top bar -->
+            <rect x="50" y="40" width="100" height="8" rx="2" class="dashboard-fill" opacity="0.6"/>
+            
+            <!-- Chart bars -->
+            <rect x="55" y="60" width="8" height="25" rx="2" class="dashboard-fill"/>
+            <rect x="70" y="50" width="8" height="35" rx="2" class="dashboard-fill" opacity="0.8"/>
+            <rect x="85" y="55" width="8" height="30" rx="2" class="dashboard-fill"/>
+            <rect x="100" y="45" width="8" height="40" rx="2" class="dashboard-fill" opacity="0.7"/>
+            <rect x="115" y="58" width="8" height="27" rx="2" class="dashboard-fill"/>
+            
+            <!-- Data lines -->
+            <line x1="50" y1="95" x2="145" y2="95" class="dashboard-stroke" opacity="0.4"/>
+            <line x1="50" y1="105" x2="145" y2="105" class="dashboard-stroke" opacity="0.4"/>
+            <line x1="50" y1="115" x2="145" y2="115" class="dashboard-stroke" opacity="0.4"/>
+            
+            <!-- Check mark -->
+            <circle cx="170" cy="50" r="12" class="dashboard-stroke" opacity="0.6"/>
+            <path d="M 165 50 L 168 53 L 173 48" class="dashboard-stroke" opacity="0.6"/>
+        </svg>
     </div>
 </div>
+
 {% endblock %}

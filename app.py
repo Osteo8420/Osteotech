@@ -88,6 +88,7 @@ def find_diagnosis(user_data):
     return best_match if best_match and best_score >= 50 else None
 
 # Routes principales
+
 @app.route('/')
 def index():
     user = get_current_user()
@@ -115,7 +116,7 @@ def register():
         user = User(email=email)
         user.set_password(password)
         user.school_id = 'ifoga'
-        user.role = 'student'  # ✅ Default role pour new users
+        user.role = 'student'
         
         db.session.add(user)
         db.session.commit()
@@ -139,7 +140,7 @@ def login():
         if user and user.check_password(password):
             session['userid'] = user.id
             session['email'] = user.email
-            session['role'] = user.role  # ✅ Ajoute le rôle à la session
+            session['role'] = user.role
             
             # ✅ REDIRECTION SELON LE RÔLE
             if user.role == 'admin':
@@ -170,15 +171,15 @@ def dashboard():
         diagnostics = []
         totaldiagnostics = 0
         
-        # ✅ CORRECTION : user_id (pas userid)
         if user:
             diagnostics = Diagnostic.query.filter_by(user_id=user.id).all()
             totaldiagnostics = len(diagnostics)
         
         return render_template('dashboard.html',
-                             diagnostics=diagnostics,
-                             totaldiagnostics=totaldiagnostics,
-                             email=session.get('email'))
+            diagnostics=diagnostics,
+            totaldiagnostics=totaldiagnostics,
+            email=session.get('email'))
+    
     except Exception as e:
         print(f"Dashboard error: {e}")
         return render_template('dashboard.html', diagnostics=[], totaldiagnostics=0, email=session.get('email'))
@@ -196,23 +197,48 @@ def dashboard_school():
         
         # Récupérer tous les diagnostics
         all_diagnostics = Diagnostic.query.all()
-        totaldiagnostics = len(all_diagnostics)
+        total_diagnostics = len(all_diagnostics)
+        
+        # ✅ Récupérer tous les étudiants de l'école
+        school_users = User.query.filter_by(school_id=user.school_id, role='student').all()
+        total_students = len(school_users)
+        
+        # ✅ Compter les étudiants actifs (au moins 1 diagnostic)
+        active_students = [u for u in school_users if len(u.diagnostics) > 0]
+        total_active_users = len(active_students)
+        
+        # ✅ Calculer la moyenne diagnostics par étudiant
+        avg_diagnostics_per_student = (total_diagnostics / total_students) if total_students > 0 else 0
         
         # Compter par pathologie
-        stats = {}
+        pathology_stats = {}
         for diagnostic in all_diagnostics:
             pathology = diagnostic.diagnosis_name or 'Non identifiée'
-            stats[pathology] = stats.get(pathology, 0) + 1
+            pathology_stats[pathology] = pathology_stats.get(pathology, 0) + 1
+        
+        # ✅ Préparer l'objet stats complet
+        stats = {
+            'total_diagnostics': total_diagnostics,
+            'total_students': total_students,
+            'total_active_users': total_active_users,
+            'avg_diagnostics_per_student': round(avg_diagnostics_per_student, 1),
+            'by_pathology': pathology_stats
+        }
         
         return render_template('dashboard-school.html',
-                             diagnostics=all_diagnostics,
-                             stats={'total_diagnostics': totaldiagnostics, 'by_pathology': stats},
-                             totaldiagnostics=totaldiagnostics,
-                             email=session.get('email'),
-                             user=user)
+            diagnostics=all_diagnostics,
+            stats=stats,
+            totaldiagnostics=total_diagnostics,
+            email=session.get('email'),
+            user=user)
+    
     except Exception as e:
         print(f"Dashboard school error: {e}")
-        return render_template('dashboard-school.html', diagnostics=[], totaldiagnostics=0, email=session.get('email'))
+        return render_template('dashboard-school.html', 
+            diagnostics=[], 
+            stats={'total_diagnostics': 0, 'total_students': 0, 'total_active_users': 0, 'avg_diagnostics_per_student': 0, 'by_pathology': {}},
+            totaldiagnostics=0, 
+            email=session.get('email'))
 
 @app.route('/app', methods=['GET', 'POST'])
 @login_required
@@ -255,10 +281,13 @@ def app_diagnostic():
             
             db.session.add(diagnostic)
             db.session.commit()
+        
+        return render_template('app.html', diagnosis=diagnosis_result, seats_by_location=SEATS_BY_LOCATION)
     
-    return render_template('app.html', diagnosis=diagnosis_result, seats_by_location=SEATS_BY_LOCATION)
+    return render_template('app.html', seats_by_location=SEATS_BY_LOCATION)
 
 # Initialisation
+
 @app.cli.command()
 def init_db():
     db.create_all()

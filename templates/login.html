@@ -13,19 +13,23 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 40px 20px;
+        position: relative;
     }
 
     .login-illustration {
+        position: relative;
+        height: 400px;
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: 0.3;
     }
 
     .login-illustration svg {
         width: 100%;
-        max-width: 220px;
-        height: auto;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     .login-form-container {
@@ -36,6 +40,8 @@
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
+        position: relative;
+        z-index: 10;
     }
 
     .login-form-container h1 {
@@ -156,46 +162,47 @@
 </style>
 
 <div class="login-wrapper">
-    <!-- Illustration Gauche: Séance d'Ostéopathie -->
+    <!-- Illustration Gauche: Formes géométriques -->
     <div class="login-illustration">
-        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 250 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <defs>
                 <style>
-                    .osteo-line { stroke: var(--color-primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-                    .osteo-dot { fill: var(--color-primary); }
+                    .geo-fill-primary { fill: var(--color-primary); }
+                    .geo-fill-secondary { fill: var(--color-secondary); }
+                    .geo-stroke { stroke: var(--color-primary); stroke-width: 1.5; fill: none; }
                 </style>
             </defs>
             
-            <!-- Table de traitement -->
-            <rect x="30" y="120" width="160" height="12" rx="2" class="osteo-line"/>
-            <line x1="35" y1="132" x2="35" y2="155" class="osteo-line"/>
-            <line x1="185" y1="132" x2="185" y2="155" class="osteo-line"/>
+            <!-- Circles - various sizes and opacities -->
+            <circle cx="30" cy="40" r="25" class="geo-fill-primary" opacity="0.08"/>
+            <circle cx="80" cy="80" r="15" class="geo-fill-secondary" opacity="0.06"/>
+            <circle cx="40" cy="150" r="30" class="geo-fill-primary" opacity="0.05"/>
+            <circle cx="200" cy="60" r="20" class="geo-fill-secondary" opacity="0.07"/>
+            <circle cx="25" cy="250" r="35" class="geo-fill-primary" opacity="0.06"/>
+            <circle cx="180" cy="200" r="18" class="geo-fill-secondary" opacity="0.08"/>
+            <circle cx="60" cy="320" r="22" class="geo-fill-primary" opacity="0.05"/>
             
-            <!-- Patient body on table (simplified) -->
-            <ellipse cx="110" cy="95" rx="30" ry="25" class="osteo-line"/>
-            <path d="M 85 115 L 75 145" class="osteo-line"/>
-            <path d="M 135 115 L 145 145" class="osteo-line"/>
+            <!-- Rectangles/Squares -->
+            <rect x="120" y="30" width="40" height="40" rx="5" class="geo-fill-secondary" opacity="0.07"/>
+            <rect x="10" y="180" width="50" height="35" rx="4" class="geo-fill-primary" opacity="0.06"/>
+            <rect x="150" cy="150" width="45" height="45" rx="6" class="geo-fill-secondary" opacity="0.05"/>
+            <rect x="80" y="280" width="35" height="50" rx="4" class="geo-fill-primary" opacity="0.08"/>
             
-            <!-- Practitioner hand/arm treating patient -->
-            <path d="M 155 70 Q 165 85 158 105" class="osteo-line" stroke-width="3"/>
-            <circle cx="158" cy="105" r="4" class="osteo-dot"/>
+            <!-- Triangles -->
+            <polygon points="200,120 230,180 170,180" class="geo-fill-primary" opacity="0.06"/>
+            <polygon points="40,260 80,300 20,300" class="geo-fill-secondary" opacity="0.07"/>
+            <polygon points="150,320 180,360 120,360" class="geo-fill-primary" opacity="0.05"/>
             
-            <!-- Other hand supporting -->
-            <path d="M 75 90 Q 55 95 50 110" class="osteo-line" stroke-width="3"/>
-            <circle cx="50" cy="110" r="4" class="osteo-dot"/>
+            <!-- Lines -->
+            <line x1="10" y1="100" x2="100" y2="120" class="geo-stroke" opacity="0.04"/>
+            <line x1="50" y1="200" x2="150" y2="240" class="geo-stroke" opacity="0.05"/>
+            <line x1="20" y1="350" x2="120" y2="370" class="geo-stroke" opacity="0.04"/>
             
-            <!-- Spine indicator (what's being treated) -->
-            <circle cx="110" cy="65" r="3" class="osteo-dot"/>
-            <circle cx="110" cy="75" r="3" class="osteo-dot"/>
-            <circle cx="110" cy="85" r="3" class="osteo-dot"/>
-            <circle cx="110" cy="95" r="3" class="osteo-dot"/>
-            
-            <!-- Healing/treatment indicator -->
-            <path d="M 115 60 Q 125 65 120 75" class="osteo-line" opacity="0.6"/>
-            <path d="M 115 75 Q 125 80 120 90" class="osteo-line" opacity="0.6"/>
-            
-            <!-- Comfort lines around patient -->
-            <path d="M 140 80 Q 155 85 160 75" class="osteo-line" opacity="0.4"/>
+            <!-- Dots pattern -->
+            <circle cx="120" cy="200" r="3" class="geo-fill-primary" opacity="0.1"/>
+            <circle cx="160" cy="210" r="2" class="geo-fill-secondary" opacity="0.08"/>
+            <circle cx="100" cy="250" r="3" class="geo-fill-primary" opacity="0.1"/>
+            <circle cx="180" cy="280" r="2" class="geo-fill-secondary" opacity="0.08"/>
         </svg>
     </div>
 
@@ -227,48 +234,47 @@
         </div>
     </div>
 
-    <!-- Illustration Droite: Diagnostic App/Tablette -->
+    <!-- Illustration Droite: Formes géométriques -->
     <div class="login-illustration">
-        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 250 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <defs>
                 <style>
-                    .app-line { stroke: var(--color-primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-                    .app-fill { fill: var(--color-primary); }
+                    .geo-fill-primary { fill: var(--color-primary); }
+                    .geo-fill-secondary { fill: var(--color-secondary); }
+                    .geo-stroke { stroke: var(--color-primary); stroke-width: 1.5; fill: none; }
                 </style>
             </defs>
             
-            <!-- Tablet/Device frame -->
-            <rect x="45" y="25" width="130" height="170" rx="10" class="app-line"/>
-            <rect x="50" y="30" width="120" height="160" rx="8" fill="rgba(32,128,144,0.05)"/>
+            <!-- Circles - various sizes and opacities -->
+            <circle cx="220" cy="50" r="28" class="geo-fill-primary" opacity="0.07"/>
+            <circle cx="170" cy="90" r="18" class="geo-fill-secondary" opacity="0.06"/>
+            <circle cx="210" cy="160" r="32" class="geo-fill-primary" opacity="0.05"/>
+            <circle cx="50" cy="70" r="22" class="geo-fill-secondary" opacity="0.08"/>
+            <circle cx="225" cy="260" r="38" class="geo-fill-primary" opacity="0.06"/>
+            <circle cx="70" cy="210" r="20" class="geo-fill-secondary" opacity="0.07"/>
+            <circle cx="190" cy="330" r="25" class="geo-fill-primary" opacity="0.05"/>
             
-            <!-- Screen notch/top bar -->
-            <rect x="80" y="35" width="60" height="6" rx="2" class="app-fill" opacity="0.7"/>
+            <!-- Rectangles/Squares -->
+            <rect x="90" y="40" width="45" height="45" rx="6" class="geo-fill-secondary" opacity="0.07"/>
+            <rect x="200" y="190" width="40" height="35" rx="4" class="geo-fill-primary" opacity="0.06"/>
+            <rect x="60" y="140" width="50" height="50" rx="6" class="geo-fill-secondary" opacity="0.05"/>
+            <rect x="130" y="290" width="40" height="55" rx="4" class="geo-fill-primary" opacity="0.08"/>
             
-            <!-- Header section -->
-            <rect x="55" y="45" width="110" height="12" rx="2" class="app-fill" opacity="0.6"/>
+            <!-- Triangles -->
+            <polygon points="50,150 85,210 15,210" class="geo-fill-primary" opacity="0.06"/>
+            <polygon points="180,240 220,290 140,290" class="geo-fill-secondary" opacity="0.07"/>
+            <polygon points="100,340 140,380 60,380" class="geo-fill-primary" opacity="0.05"/>
             
-            <!-- Diagnostic form fields -->
-            <rect x="60" y="65" width="100" height="6" rx="1" class="app-line" opacity="0.5"/>
-            <rect x="60" y="76" width="100" height="6" rx="1" class="app-line" opacity="0.5"/>
-            <rect x="60" y="87" width="100" height="6" rx="1" class="app-line" opacity="0.5"/>
+            <!-- Lines -->
+            <line x1="240" y1="100" x2="150" y2="130" class="geo-stroke" opacity="0.04"/>
+            <line x1="200" y1="210" x2="100" y2="250" class="geo-stroke" opacity="0.05"/>
+            <line x1="230" y1="360" x2="130" y2="380" class="geo-stroke" opacity="0.04"/>
             
-            <!-- Analysis/Results section -->
-            <text x="60" y="108" font-size="8" class="app-fill" opacity="0.8">Résultats:</text>
-            
-            <!-- Result bars/indicators -->
-            <rect x="60" y="115" width="25" height="8" rx="1" class="app-fill" opacity="0.8"/>
-            <rect x="60" y="126" width="20" height="8" rx="1" class="app-fill" opacity="0.6"/>
-            <rect x="60" y="137" width="30" height="8" rx="1" class="app-fill" opacity="0.7"/>
-            
-            <!-- Check/validation marks -->
-            <circle cx="95" cy="119" r="5" class="app-line" opacity="0.6"/>
-            <path d="M 93 119 L 95 121 L 97 118" class="app-line" opacity="0.6" stroke-width="1.5"/>
-            
-            <!-- Bottom button area -->
-            <rect x="60" y="150" width="100" height="9" rx="2" class="app-fill" opacity="0.7"/>
-            
-            <!-- Home indicator (notch) -->
-            <rect x="105" y="185" width="10" height="3" rx="1.5" class="app-fill" opacity="0.5"/>
+            <!-- Dots pattern -->
+            <circle cx="130" cy="210" r="3" class="geo-fill-primary" opacity="0.1"/>
+            <circle cx="90" cy="220" r="2" class="geo-fill-secondary" opacity="0.08"/>
+            <circle cx="150" cy="260" r="3" class="geo-fill-primary" opacity="0.1"/>
+            <circle cx="70" cy="290" r="2" class="geo-fill-secondary" opacity="0.08"/>
         </svg>
     </div>
 </div>

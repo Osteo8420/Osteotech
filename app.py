@@ -195,13 +195,15 @@ def dashboard_school():
         if not user or user.role != 'admin':
             return redirect(url_for('dashboard'))
         
-        # Récupérer tous les diagnostics
-        all_diagnostics = Diagnostic.query.all()
-        total_diagnostics = len(all_diagnostics)
-        
         # ✅ Récupérer tous les étudiants de l'école
         school_users = User.query.filter_by(school_id=user.school_id, role='student').all()
         total_students = len(school_users)
+        
+        # ✅ Récupérer UNIQUEMENT les diagnostics des étudiants de cette école
+        all_diagnostics = Diagnostic.query.filter(
+            Diagnostic.user_id.in_([u.id for u in school_users])
+        ).all()
+        total_diagnostics = len(all_diagnostics)
         
         # ✅ Compter les étudiants actifs (au moins 1 diagnostic)
         active_students = [u for u in school_users if len(u.diagnostics) > 0]
